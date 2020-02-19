@@ -83,7 +83,7 @@ class OracleStat(models.Model):
     adg_apply_value = models.IntegerField("adg应用延迟(秒)",blank=True, null=True)
     alert_log = models.TextField("alert日志内容",blank=True,null=True)
     status = models.IntegerField("数据库连接状态 0成功 1失败",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -108,7 +108,7 @@ class OracleTableSpace(models.Model):
     percent_used = models.FloatField("使用百分比",blank=True, null=True)
     percent_free = models.FloatField("剩余百分比",blank=True, null=True)
     used_mb = models.FloatField("每天使用表空间大小",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -127,7 +127,7 @@ class OracleTempTableSpace(models.Model):
     total_size = models.FloatField("临时表空间大小",blank=True, null=True)
     used_size = models.FloatField("使用空间",blank=True, null=True)
     percent_used = models.FloatField("使用百分比",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -146,7 +146,7 @@ class OracleUndoTableSpace(models.Model):
     total_size = models.FloatField("undo表空间大小",blank=True, null=True)
     used_size = models.FloatField("使用空间",blank=True, null=True)
     percent_used = models.FloatField("使用百分比",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -166,7 +166,7 @@ class OracleTableStats(models.Model):
     num_rows = models.IntegerField("表行数",blank=True,null=True)
     change_pct = models.FloatField("变更率",blank=True,null=True)
     last_analyzed = models.DateTimeField("最近统计信息收集时间",blank=True,null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -183,7 +183,7 @@ class OracleControlFile(models.Model):
     service_name = models.CharField("数据库服务名",max_length=255)
     name = models.CharField("控制文件",max_length=255,blank=True,null=True)
     size = models.FloatField("控制文件大小(MB)",blank=True,null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -206,7 +206,7 @@ class OracleRedoLog(models.Model):
     archived = models.CharField("是否归档",max_length=32,blank=True,null=True)
     status = models.CharField("状态",max_length=32,blank=True,null=True)
     member = models.CharField("日志文件",max_length=255,blank=True,null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -297,7 +297,7 @@ class OracleStatHis(models.Model):
     adg_apply_value = models.IntegerField("adg应用延迟(秒)",blank=True, null=True)
     alert_log = models.TextField("alert日志内容",blank=True,null=True)
     status = models.IntegerField("数据库连接状态 0成功 1失败",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -322,7 +322,7 @@ class OracleTableSpaceHis(models.Model):
     percent_used = models.FloatField("使用百分比",blank=True, null=True)
     percent_free = models.FloatField("剩余百分比",blank=True, null=True)
     used_mb = models.FloatField("每天使用表空间大小",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -341,7 +341,7 @@ class OracleTempTableSpaceHis(models.Model):
     total_size = models.FloatField("临时表空间大小",blank=True, null=True)
     used_size = models.FloatField("使用空间",blank=True, null=True)
     percent_used = models.FloatField("使用百分比",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
@@ -360,7 +360,7 @@ class OracleUndoTableSpaceHis(models.Model):
     total_size = models.FloatField("undo表空间大小",blank=True, null=True)
     used_size = models.FloatField("使用空间",blank=True, null=True)
     percent_used = models.FloatField("使用百分比",blank=True, null=True)
-    check_time = models.DateTimeField("采集时间",default=timezone.now(),blank=True, null=True)
+    check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
 
     def __str__(self):
         return self.tags
