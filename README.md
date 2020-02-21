@@ -90,7 +90,7 @@ python manage.py createsuperuser(创建登录用户)
 
 #### 6. 启动
 python manage.py runserver
-
+nohup python3 manage.py runserver 0.0.0.0:9998&
 celery –A db_monitor worker –l info
 
 celery –A db_monitor beat –l info
@@ -134,5 +134,8 @@ grant.sql & table.sql & procedure.sql
 - QQ群 916746047
 
 Copyright © 2019 DB monitor
+
+
+python3 manage.py runserver 0.0.0.0:9998 &9998
 
 
