@@ -95,6 +95,17 @@ celery –A db_monitor worker –l info
 
 celery –A db_monitor beat –l info
 
+
+杀进程用:
+ps aux | grep python3 |  awk '{print $2}' | xargs kill -9
+遇到celery问题
+{
+终端： 
+export PATH=/usr/local/python3/bin:$PATH      # 我的Python3资源文件都放在 /usr/local/python3 文件夹下
+  终端： 
+sudo echo 'export PATH=/usr/local/python3/bin:$PATH' >> /etc/profile.d/python3.sh  # 避免重启丢失
+}
+
 #### 7. 前端配置
 请参考：[db_monitor_vue](https://github.com/gumengkai/db_monitor_vue)
 

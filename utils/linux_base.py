@@ -17,21 +17,38 @@ class LinuxBase(object):
 
     # ssh connection and sftp connection
     def connection(self):
+        print('--------connection---------')
+        print(self.hostname)
+        print(self.port)
+        print(self.username)
+        print(self.password)
+        print('--------connection----end-----')
+
         self.params = self.convert_params(self.params)
         ssh_client = paramiko.SSHClient()
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
         try:
             ssh_client.connect(**self.params)
+            print("ssh_client")
+            print(ssh_client)
             t = paramiko.Transport((self.hostname,self.port))
             t.connect(username=self.username,password=self.password)
             sftp_client = paramiko.SFTPClient.from_transport(t)
+            print("sftp_client")
+            print(sftp_client)
             return ssh_client,sftp_client
         except Exception as e:
             print("linux connect error")
+            print(e)
             return(None,None)
     # read all of file content
     def readfile(self,file,seek=0):
         _,sftp_client = self.connection()
+        print("readfile")
+        print(sftp_client)
+        print("file")
+        print(file)
         remote_file = sftp_client.open(file,'rb')
         remote_file.seek(seek)
         for line in remote_file.read().splitlines():
