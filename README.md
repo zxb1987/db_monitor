@@ -96,6 +96,7 @@ celery –A db_monitor worker –l info
 celery –A db_monitor beat –l info
 
 
+sed -i 's/\r$//' start.sh 
 杀进程用:
 ps aux | grep python3 |  awk '{print $2}' | xargs kill -9
 遇到celery问题
