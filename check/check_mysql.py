@@ -86,9 +86,9 @@ def check_mysql(tags, mysql_params):
 
 if __name__ =='__main__':
     mysql_params = {
-        'host' : '192.168.48.50',
+        'host' : '114.116.16.6',
         'port':3306,
         'user':'root',
-        'password':'mysqld'
+        'password':'jxnet_123qwe'
     }
     check_mysql('mysql50',mysql_params)

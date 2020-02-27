@@ -94,7 +94,7 @@ class RedisStat(object):
         self.loop_cnt += 1
 
 if __name__ == "__main__":
-    redis_conn = redis.StrictRedis(host='192.168.48.60', port=6379)
+    redis_conn = redis.StrictRedis(host='114.116.16.6', port=6379)
     the_redis = RedisStat(redis_conn)
     the_redis.get_redis_stat()
     time.sleep(60)

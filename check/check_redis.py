@@ -67,12 +67,12 @@ def check_redis(tags, redis_params):
 
 if __name__ == '__main__':
     redis_params = {
-        'host':'192.168.48.60',
+        'host':'114.116.16.6',
         'port':6379,
-        'password':'',
+        'password':'123qwe',
         'version':'',
         'sshport_os':22,
         'user_os':'root',
-        'password_os':'oracle'
+        'password_os':'lecent.test'
     }
     check_redis('redis-6379',redis_params)

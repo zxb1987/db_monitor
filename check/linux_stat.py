@@ -530,7 +530,7 @@ class LinuxStat(LinuxBase):
         res = super().exec_command(command,self.conn)
         disk_list = [line.split() for line in res]
         for each in disk_list:
-            if each[0] == 'Filesystem' or each[0] == 'none' or each[0] == 'udev' or each[0] in "tmpfs":
+            if  each[0] == '文件系统' or each[0] == '1K - 块' or each[0] == '已用' or each[0] == '可用' or each[0] == '已用 %' or each[0] == '挂载点' or each[0] == 'Filesystem' or each[0] == 'none' or each[0] == 'udev' or each[0] in "tmpfs":
                 continue
             else:
                 ret.append(each)
@@ -540,10 +540,10 @@ class LinuxStat(LinuxBase):
 if __name__ == '__main__':
 
     linux_params = {
-        'hostname': '192.168.48.10',
-        'port': 10086,
+        'hostname': '114.116.16.6',
+        'port': 22,
         'username': 'root',
-        'password': 'oracle'
+        'password': 'tecent.test'
     }
     linux_conn, _ = LinuxBase(linux_params).connection()
 

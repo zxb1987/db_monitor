@@ -62,6 +62,7 @@ def check_linux(tags,linux_params):
         diskfree_list = LinuxStat(linux_params, linux_conn).get_diskfree()
         for each in diskfree_list:
             dev, total_size, used_size, free_size, used_percent, mount_point = each
+            print(used_percent)
             used_percent = float(used_percent.replace('%',''))
             insert_data_sql = '''insert into linux_disk(tags,host,dev,total_size,used_size,free_size,used_percent,mount_point,check_time) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)'''
             values = (tags, host, dev, round(float(total_size) / 1024, 2), round(float(used_size) / 1024, 2),

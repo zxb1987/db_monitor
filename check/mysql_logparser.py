@@ -115,15 +115,15 @@ def get_mysql_alert(tags,mysql_params,linux_params):
 
 if __name__ =='__main__':
     mysql_params = {
-        'host': '192.168.48.50',
+        'host': '114.116.16.6',
         'port': 3306,
         'user': 'root',
-        'password': 'mysqld'
+        'password': 'jxnet_123qwe'
     }
     linux_params =   {
-        'hostname': '192.168.48.50',
+        'hostname': '114.116.16.6',
         'port': 22,
         'username':'root',
-        'password':'mysqld'
+        'password':'tecent.test'
     }
     get_mysql_alert('mysql50',mysql_params,linux_params)
