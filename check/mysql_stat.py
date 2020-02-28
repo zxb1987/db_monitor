@@ -225,10 +225,10 @@ class MySQLStat(MysqlBase):
 
 if __name__ =='__main__':
     mysql_params = {
-        'host' : '192.168.48.50',
+        'host' : '114.116.16.6',
         'port':3306,
         'user':'root',
-        'password':'mysqld'
+        'password':'jxnet_123qwe'
     }
     db_conn = MysqlBase(mysql_params).connection()
     mysqlstat= MySQLStat(mysql_params,db_conn)

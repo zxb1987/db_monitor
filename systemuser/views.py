@@ -212,53 +212,33 @@ class Menu(APIView):
                 ]
             },
             {
-                "path": '/systemmain',
-                "name": 'systemmain',
+                "path": '/system-main',
+                "name": 'system-main',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": '系统管理2'
+                    "title": '系统管理'
                 },
                 "component": 'Main',
                 "children": [
                     {
-                        'path': 'systemmain-user-list',
-                        'name': 'systemmain-user-list',
+                        'path': 'system-user-list',
+                        'name': 'system-user-list',
                         'meta': {
-                            'access': ['assets.view_oraclelist'],
+                            'access': ['system-main.view_userlist'],
                             'icon': 'ios-menu',
                             'title': '用户管理'
                         },
-                        'component': 'system/alarm-conf'
+                        'component': 'system-main/system-user-list'
                     },
                     {
-                        'path': 'mysql-list',
-                        'name': 'mysql-list',
+                        'path': 'system-orle-list',
+                        'name': 'system-orle-list',
                         'meta': {
-                            'access': ['assets.view_mysqllist'],
+                            'access': ['system-main.view_orlelist'],
                             'icon': 'ios-menu',
                             'title': '角色管理'
                         },
-                        'component': 'assets/mysql-list'
-                    },
-                    {
-                        'path': 'linux-list',
-                        'name': 'linux-list',
-                        'meta': {
-                            'access': ['assets.view_linuxlist'],
-                            'icon': 'ios-menu',
-                            'title': '权限管理'
-                        },
-                        'component': 'assets/linux-list'
-                    },
-                    {
-                        'path': 'redis-list',
-                        'name': 'redis-list',
-                        'meta': {
-                            'access': ['assets.view_redislist'],
-                            'icon': 'ios-menu',
-                            'title': '资源管理'
-                        },
-                        'component': 'assets/redis-list'
+                        'component': 'system-main/system-orle-list'
                     }
                 ]
             },

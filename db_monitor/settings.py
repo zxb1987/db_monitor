@@ -236,7 +236,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'http://114.116.16.6:8080',
+    'http://127.0.0.1:9991',
 )
 MIDDLEWARE_CLASSES = ('system.views.DisableCSRFCheck',)
 
