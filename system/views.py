@@ -212,56 +212,119 @@ class Menu(APIView):
                 ]
             },
             {
-                "path": '/systemmain',
-                "name": 'systemmain',
+                "path": '/admin',
+                "name": 'admin',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": '系统管理2'
+                    "title": '系统管理'
                 },
                 "component": 'Main',
                 "children": [
                     {
-                        'path': 'systemmain-user-list',
-                        'name': 'systemmain-user-list',
+                        'path': 'user-lists',
+                        'name': 'user-lists',
                         'meta': {
-                            'access': ['assets.view_oraclelist'],
+                            'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
                             'title': '用户管理'
                         },
-                        'component': 'system/alarm-conf'
+                        'component': 'admin/user-list'
                     },
                     {
-                        'path': 'mysql-list',
-                        'name': 'mysql-list',
+                        'path': 'role-list',
+                        'name': 'role-list',
                         'meta': {
                             'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
                             'title': '角色管理'
                         },
-                        'component': 'assets/mysql-list'
+                        'component': 'admin/role-list'
                     },
                     {
-                        'path': 'linux-list',
-                        'name': 'linux-list',
+                        'path': 'permissions-list',
+                        'name': 'permissions-list',
                         'meta': {
-                            'access': ['assets.view_linuxlist'],
+                            'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
                             'title': '权限管理'
                         },
-                        'component': 'assets/linux-list'
+                        'component': 'admin/permissions-list'
                     },
                     {
-                        'path': 'redis-list',
-                        'name': 'redis-list',
+                        'path': 'resource-list',
+                        'name': 'resource-list',
                         'meta': {
-                            'access': ['assets.view_redislist'],
+                            'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
                             'title': '资源管理'
                         },
-                        'component': 'assets/redis-list'
+                        'component': 'admin/resource-list'
                     }
                 ]
             },
+            {
+                "path": '/op_manager',
+                "name": 'op_manager',
+                "meta": {
+                    "icon": 'ios-cloud',
+                    "title": '运维工具'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'remittance-list',
+                        'name': 'remittance-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '汇款处理'
+                        },
+                        'component': 'admin/user-list'
+                    },
+                    {
+                        'path': 'balance-list',
+                        'name': 'balance-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '余额处理'
+                        },
+                        'component': 'admin/role-list'
+                    }
+                ]
+            },
+            {
+                "path": '/report',
+                "name": 'report',
+                "meta": {
+                    "icon": 'ios-cloud',
+                    "title": '报告信息'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'business-report-list',
+                        'name': 'business-report-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '业务报告'
+                        },
+                        'component': 'admin/user-list'
+                    },
+                    {
+                        'path': 'system-report-list',
+                        'name': 'system-report-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '系统报告'
+                        },
+                        'component': 'admin/role-list'
+                    }
+                ]
+            },
+
             {
                 "path": '/oracle',
                 "name": 'Oracle',
