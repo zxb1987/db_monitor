@@ -12,7 +12,7 @@ class LinuxBase(object):
 
     @classmethod
     def convert_params(cls,params):
-        params['port'] = int(params.get('port', 0))
+        params['port'] = params.get('port', 0)
         return params
 
     # ssh connection and sftp connection
@@ -49,7 +49,11 @@ class LinuxBase(object):
         print(sftp_client)
         print("file")
         print(file)
+        print(1)
         remote_file = sftp_client.open(file,'rb')
+        print(2)
+        print(remote_file)
+        print(3)
         remote_file.seek(seek)
         for line in remote_file.read().splitlines():
             if line != '':

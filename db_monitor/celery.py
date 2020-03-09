@@ -14,6 +14,7 @@ platforms.C_FORCE_ROOT = True
 
 @app.task(bind=True)
 def debug_task(self):
+    print("这是任务开始")
     print('Request: {0!r}'.format(self.request))
 
 

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'linux.apps.LinuxConfig',
     'mysql.apps.MysqlConfig',
     'rds.apps.RdsConfig',
+    'admin.apps.AdminConfig',
 ]
 
 GRAPHENE = {
@@ -192,9 +193,9 @@ PAGINATION_SETTINGS = {
 DISPLAY_PER_PAGE = 15
 
 ## celery 4
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://:123qwe@114.116.16.6:6379/1'
 # CELERY_RESULT_BACKEND = 'django-db'
-CELERY_BROKER_URL = 'redis://localhost:6379/2'
+CELERY_BROKER_URL = 'redis://:123qwe@114.116.16.6:6379/2'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERYD_CONCURRENCY = 4
 CELERY_TIMEZONE = 'Asia/Shanghai'
