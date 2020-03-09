@@ -212,8 +212,8 @@ class Menu(APIView):
                 ]
             },
             {
-                "path": '/admin',
-                "name": 'admin',
+                "path": '/user',
+                "name": 'user',
                 "meta": {
                     "icon": 'ios-cloud',
                     "title": '系统管理'
@@ -224,11 +224,11 @@ class Menu(APIView):
                         'path': 'user-lists',
                         'name': 'user-lists',
                         'meta': {
-                            'access': ['assets.view_mysqllist'],
+                            'access': ['user.view_userlist'],
                             'icon': 'ios-menu',
                             'title': '用户管理'
                         },
-                        'component': 'admin/user-list'
+                        'component': 'user/user-list'
                     },
                     {
                         'path': 'role-list',
@@ -238,7 +238,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '角色管理'
                         },
-                        'component': 'admin/role-list'
+                        'component': 'user/role-list'
                     },
                     {
                         'path': 'permissions-list',
@@ -248,7 +248,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '权限管理'
                         },
-                        'component': 'admin/permissions-list'
+                        'component': 'user/permissions-list'
                     },
                     {
                         'path': 'resource-list',
@@ -258,7 +258,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '资源管理'
                         },
-                        'component': 'admin/resource-list'
+                        'component': 'user/resource-list'
                     }
                 ]
             },

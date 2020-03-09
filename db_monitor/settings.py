@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'linux.apps.LinuxConfig',
     'mysql.apps.MysqlConfig',
     'rds.apps.RdsConfig',
-    'admin.apps.AdminConfig',
+    'user.apps.UserConfig',
 ]
 
 GRAPHENE = {
