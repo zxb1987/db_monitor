@@ -27,7 +27,3 @@ print(res)
 
 #6.断开连接
 client.close()
-#6.断开连接
-client.close()
-#6.断开连接
-client.close()
