@@ -1,0 +1,17 @@
+Index: test.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test.py	(revision 256b1724d47f998f357f9bc648c4f31c9ba7de14)
++++ test.py	(date 1583911350027)
+@@ -26,4 +26,8 @@
+ print(res)
+ 
+ #6.断开连接
++client.close()
++#6.断开连接
++client.close()
++#6.断开连接
+ client.close()
+\ No newline at end of file
