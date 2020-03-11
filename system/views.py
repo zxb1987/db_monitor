@@ -221,8 +221,8 @@ class Menu(APIView):
                 "component": 'Main',
                 "children": [
                     {
-                        'path': 'user-lists',
-                        'name': 'user-lists',
+                        'path': 'user-list',
+                        'name': 'user-list',
                         'meta': {
                             'access': ['user.view_userlist'],
                             'icon': 'ios-menu',
@@ -239,27 +239,28 @@ class Menu(APIView):
                             'title': '角色管理'
                         },
                         'component': 'user/role-list'
-                    },
-                    {
-                        'path': 'permissions-list',
-                        'name': 'permissions-list',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '权限管理'
-                        },
-                        'component': 'user/permissions-list'
-                    },
-                    {
-                        'path': 'resource-list',
-                        'name': 'resource-list',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '资源管理'
-                        },
-                        'component': 'user/resource-list'
                     }
+                    #,
+                    # {
+                    #     'path': 'permissions-list',
+                    #     'name': 'permissions-list',
+                    #     'meta': {
+                    #         'access': ['assets.view_mysqllist'],
+                    #         'icon': 'ios-menu',
+                    #         'title': '权限管理'
+                    #     },
+                    #     'component': 'user/permissions-list'
+                    # },
+                    # {
+                    #     'path': 'resource-list',
+                    #     'name': 'resource-list',
+                    #     'meta': {
+                    #         'access': ['assets.view_mysqllist'],
+                    #         'icon': 'ios-menu',
+                    #         'title': '资源管理'
+                    #     },
+                    #     'component': 'user/resource-list'
+                    # }
                 ]
             },
             {
@@ -279,7 +280,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '汇款处理'
                         },
-                        'component': 'admin/user-list'
+                        'component': 'user/user-list'
                     },
                     {
                         'path': 'balance-list',
@@ -289,7 +290,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '余额处理'
                         },
-                        'component': 'admin/role-list'
+                        'component': 'user/role-list'
                     }
                 ]
             },
@@ -310,7 +311,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '业务报告'
                         },
-                        'component': 'admin/user-list'
+                        'component': 'user/user-list'
                     },
                     {
                         'path': 'system-report-list',
@@ -320,7 +321,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': '系统报告'
                         },
-                        'component': 'admin/role-list'
+                        'component': 'user/role-list'
                     }
                 ]
             },

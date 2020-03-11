@@ -61,3 +61,5 @@ class ApiRedisDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = RedisList.objects.get_queryset().order_by('id')
     serializer_class = RedisListSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
+
+

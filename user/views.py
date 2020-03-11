@@ -13,8 +13,8 @@ class ApiUserList(generics.ListCreateAPIView):
     queryset = UserList.objects.get_queryset().order_by('id')
     serializer_class = UserListSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('tags', 'host','linux_version')
-    search_fields = ('tags', 'host',)
+    filter_fields = ('id','user_name',)
+    search_fields = ('id','user_name',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
 
 class ApiUserDetail(generics.RetrieveUpdateDestroyAPIView):
