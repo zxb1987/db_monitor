@@ -29,4 +29,6 @@ urlpatterns = [
     path('rds/', include('rds.urls', namespace='rds')),
     path('linux/', include('linux.urls', namespace='linux')),
     path('user/', include('user.urls', namespace='user')),
+    path('monitoring/', include('monitoring.urls', namespace='monitoring')),
+
 ]

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'mysql.apps.MysqlConfig',
     'rds.apps.RdsConfig',
     'user.apps.UserConfig',
+    'monitoring.apps.MonitoringConfig',
 ]
 
 GRAPHENE = {

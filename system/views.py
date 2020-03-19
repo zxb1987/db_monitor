@@ -185,7 +185,7 @@ class Menu(APIView):
                 "name": 'alarm',
                 "meta": {
                     "icon": 'ios-warning',
-                    "title": '监控告警'
+                    "title": '服务监控'
                 },
                 "component": 'Main',
                 "children": [
@@ -211,6 +211,48 @@ class Menu(APIView):
                     }
                 ]
             },
+            {
+                "path": '/monitoring',
+                "name": 'monitoring',
+                "meta": {
+                    "icon": 'ios-warning',
+                    "title": '业务监控'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'monitoring-confing',
+                        'name': 'monitoring-confing',
+                        'meta': {
+                            'access': ['monitoring.view_monitoringconfig'],
+                            'icon': 'ios-menu',
+                            'title': 'SQL配置'
+                        },
+                        'component': 'monitoring/monitoring-config'
+                    },
+                    {
+                        'path': 'monitoring-run',
+                        'name': 'monitoring-run',
+                        'meta': {
+                            'access': ['monitoring.view_monitoringrun'],
+                            'icon': 'ios-menu',
+                            'title': '监控配置'
+                        },
+                        'component': 'monitoring/monitoring-run'
+                    },
+                    {
+                        'path': 'monitoring-info',
+                        'name': 'monitoring-info',
+                        'meta': {
+                            'access': ['monitoring.view_monitoringinfo'],
+                            'icon': 'ios-menu',
+                            'title': '监控记录'
+                        },
+                        'component': 'monitoring/monitoring-info'
+                    }
+                ]
+            },
+
             {
                 "path": '/user',
                 "name": 'user',
@@ -240,57 +282,26 @@ class Menu(APIView):
                         },
                         'component': 'user/role-list'
                     }
-                    #,
-                    # {
-                    #     'path': 'permissions-list',
-                    #     'name': 'permissions-list',
-                    #     'meta': {
-                    #         'access': ['assets.view_mysqllist'],
-                    #         'icon': 'ios-menu',
-                    #         'title': '权限管理'
-                    #     },
-                    #     'component': 'user/permissions-list'
-                    # },
-                    # {
-                    #     'path': 'resource-list',
-                    #     'name': 'resource-list',
-                    #     'meta': {
-                    #         'access': ['assets.view_mysqllist'],
-                    #         'icon': 'ios-menu',
-                    #         'title': '资源管理'
-                    #     },
-                    #     'component': 'user/resource-list'
-                    # }
-                ]
-            },
-            {
-                "path": '/op_manager',
-                "name": 'op_manager',
-                "meta": {
-                    "icon": 'ios-cloud',
-                    "title": '运维工具'
-                },
-                "component": 'Main',
-                "children": [
+                    ,
                     {
-                        'path': 'remittance-list',
-                        'name': 'remittance-list',
+                        'path': 'permissions-list',
+                        'name': 'permissions-list',
                         'meta': {
                             'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
-                            'title': '汇款处理'
+                            'title': '权限管理'
                         },
-                        'component': 'user/user-list'
+                        'component': 'user/permissions-list'
                     },
                     {
-                        'path': 'balance-list',
-                        'name': 'balance-list',
+                        'path': 'resource-list',
+                        'name': 'resource-list',
                         'meta': {
                             'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
-                            'title': '余额处理'
+                            'title': '资源管理'
                         },
-                        'component': 'user/role-list'
+                        'component': 'user/resource-list'
                     }
                 ]
             },

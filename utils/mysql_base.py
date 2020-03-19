@@ -33,6 +33,7 @@ class MysqlBase(object):
     def exec(self,sql,val):
         conn = self.connection()
         cur = conn.cursor()
+        print('sql:' + sql)
         if val:
             cur.execute(sql, val)
         else:

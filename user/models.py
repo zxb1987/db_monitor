@@ -1,5 +1,6 @@
 # encoding:utf-8
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -15,7 +16,7 @@ class UserList(models.Model):
     mail = models.CharField("E-mail",max_length=32,blank=True,null=True)
     fax = models.CharField("传真",max_length=32,blank=True,null=True)
     remarks = models.CharField("备注", max_length=32, blank=True, null=True)
-
+    check_time = models.DateTimeField("添加时间", default=timezone.now, blank=True, null=True)
     def __str__(self):
         return self.user_name
 
