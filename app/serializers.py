@@ -3,8 +3,8 @@ from .models import *
 
 
 
-class UserListSerializer(serializers.ModelSerializer):
+class AppListSerializer(serializers.ModelSerializer):
     class Meta:
         print("----------------serializers>UserListSerializer-----------------------")
-        model = UserList
+        model = AppList
         fields = '__all__'

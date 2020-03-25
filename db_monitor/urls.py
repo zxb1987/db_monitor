@@ -30,5 +30,6 @@ urlpatterns = [
     path('linux/', include('linux.urls', namespace='linux')),
     path('user/', include('user.urls', namespace='user')),
     path('monitoring/', include('monitoring.urls', namespace='monitoring')),
+    path('app/', include('app.urls', namespace='app')),
 
 ]

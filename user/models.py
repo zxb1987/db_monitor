@@ -7,6 +7,8 @@ from django.utils import timezone
 # User监控列表
 class UserList(models.Model):
 
+
+    print("----------------models>UserList-----------------------")
     user_id = models.CharField("用户信息",max_length=32,blank=True,null=True)
     user_name = models.CharField("姓名",max_length=32,blank=True,null=True)
     department = models.CharField("部门",max_length=32,blank=True,null=True)
