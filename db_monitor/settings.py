@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rds.apps.RdsConfig',
     'user.apps.UserConfig',
     'monitoring.apps.MonitoringConfig',
+    'app.apps.AppConfig',
 ]
 
 GRAPHENE = {
@@ -164,7 +165,7 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
             'formatter': 'verbose'
@@ -173,12 +174,12 @@ LOGGING = {
     'loggers': {
         'tasks': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         'asset': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
     },

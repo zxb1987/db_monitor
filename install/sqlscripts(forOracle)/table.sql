@@ -7,7 +7,7 @@ prompt
 prompt Creating table SNAP_SHOW
 prompt ========================
 prompt
-create global temporary table DBMON.SNAP_SHOW
+create global temporary table SNAP_SHOW
 (
   id           INTEGER,
   rate         VARCHAR2(32),
@@ -30,7 +30,7 @@ prompt
 prompt Creating table SNAP_SHOW_CONFIG
 prompt ===============================
 prompt
-create global temporary table DBMON.SNAP_SHOW_CONFIG
+create global temporary table SNAP_SHOW_CONFIG
 (
   id         INTEGER not null,
   col1       VARCHAR2(32),

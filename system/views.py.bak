@@ -1,22 +1,22 @@
+from django.shortcuts import render
+
 import json
 import logging
-
-from django.contrib.auth.backends import ModelBackend
-from django.db.models import Q
-from django.shortcuts import HttpResponse
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework import permissions
 from rest_framework.authtoken.models import Token
-from rest_framework.views import APIView
-
+from django.shortcuts import render, HttpResponse
+from django.contrib.auth.backends import ModelBackend
 from system.models import Users
-from .models import AlertLog, AlarmConf, AlarmInfo
-from .serializers import AlertLogSerializer, AlarmConfSerializer, AlarmInfoSerializer
+from django.db.models import Q
+from .models import AlertLog,AlarmConf,AlarmInfo
+from rest_framework import permissions
+from rest_framework import generics
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .serializers import AlertLogSerializer,AlarmConfSerializer,AlarmInfoSerializer
 
 logger = logging.getLogger('system')
-
 
 class UserInfo(APIView):
     """
@@ -36,7 +36,6 @@ class UserInfo(APIView):
             'avatar': 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
         }
         return HttpResponse(json.dumps(result))
-
 
 class UserLogout(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -67,18 +66,23 @@ class CustomBackend(ModelBackend):
             logger.error(e)
             return None
 
-
 class Menu(APIView):
-    print('-------------------------主机管理----------------------------------')
 
     def post(self, request):
+
+
+
+
+
+
+        print('-------------------------Menu----------------------------------')
         result = [
             {
                 "path": '/assets',
                 "name": 'assets',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": '主机管理'
+                    "title": '资源管理'
                 },
                 "component": 'Main',
                 "children": [
@@ -180,7 +184,7 @@ class Menu(APIView):
                 "path": '/alarm',
                 "name": 'alarm',
                 "meta": {
-                    "icon": 'ios-notifications',
+                    "icon": 'ios-warning',
                     "title": '服务监控'
                 },
                 "component": 'Main',
@@ -211,8 +215,8 @@ class Menu(APIView):
                 "path": '/monitoring',
                 "name": 'monitoring',
                 "meta": {
-                    "icon": 'md-repeat',
-                    "title": 'SQL监控'
+                    "icon": 'ios-warning',
+                    "title": '业务监控'
                 },
                 "component": 'Main',
                 "children": [
@@ -247,74 +251,13 @@ class Menu(APIView):
                         'component': 'monitoring/monitoring-info'
                     }
                 ]
-            }, {
-                "path": '/app',
-                "name": 'app',
-                "meta": {
-                    "icon": 'ios-cube',
-                    "title": '应用信息'
-                },
-                "component": 'Main',
-                "children": [
-                    {
-                        'path': 'app-config',
-                        'name': 'app-config',
-                        'meta': {
-                            'access': ['monitoring.view_monitoringrun'],
-                            'icon': 'ios-menu',
-                            'title': '应用配置'
-                        },
-                        'component': 'app/app-config'
-                    },
-                    {
-                        'path': 'app-info',
-                        'name': 'app-info',
-                        'meta': {
-                            'access': ['monitoring.view_monitoringinfo'],
-                            'icon': 'ios-menu',
-                            'title': '应用信息'
-                        },
-                        'component': 'app/app-info'
-                    }
-                ]
-            },
-            {
-                "path": '/report',
-                "name": 'report',
-                "meta": {
-                    "icon": 'md-megaphone',
-                    "title": '报告信息'
-                },
-                "component": 'Main',
-                "children": [
-                    {
-                        'path': 'business-report-list',
-                        'name': 'business-report-list',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '应用报告'
-                        },
-                        'component': 'user/user-list'
-                    },
-                    {
-                        'path': 'system-report-list',
-                        'name': 'system-report-list',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '系统报告'
-                        },
-                        'component': 'user/role-list'
-                    }
-                ]
             },
 
             {
                 "path": '/user',
                 "name": 'user',
                 "meta": {
-                    "icon": 'ios-settings',
+                    "icon": 'ios-cloud',
                     "title": '系统管理'
                 },
                 "component": 'Main',
@@ -359,6 +302,37 @@ class Menu(APIView):
                             'title': '资源管理'
                         },
                         'component': 'user/resource-list'
+                    }
+                ]
+            },
+            {
+                "path": '/report',
+                "name": 'report',
+                "meta": {
+                    "icon": 'ios-cloud',
+                    "title": '报告信息'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'business-report-list',
+                        'name': 'business-report-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '业务报告'
+                        },
+                        'component': 'user/user-list'
+                    },
+                    {
+                        'path': 'system-report-list',
+                        'name': 'system-report-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '系统报告'
+                        },
+                        'component': 'user/role-list'
                     }
                 ]
             },
@@ -689,30 +663,28 @@ class Menu(APIView):
         ]
         return HttpResponse(json.dumps(result))
 
-
 class ApiAlertLog(generics.ListAPIView):
     queryset = AlertLog.objects.all().order_by('-log_time')
     serializer_class = AlertLogSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filter_fields = ['tags', 'log_level']
+    filter_fields = ['tags','log_level']
     search_fields = ['log_content']
     permission_classes = (permissions.DjangoModelPermissions,)
+
 
 
 class ApiAlarmConf(generics.ListCreateAPIView):
     queryset = AlarmConf.objects.get_queryset().order_by('-type')
     serializer_class = AlarmConfSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('type', 'name',)
-    search_fields = ('type', 'name',)
+    filter_fields = ('type','name',)
+    search_fields = ('type','name',)
     permission_classes = (permissions.DjangoModelPermissions,)
-
 
 class ApiAlarmConfDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = AlarmConf.objects.get_queryset().order_by('id')
     serializer_class = AlarmConfSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
-
 
 class ApiAlarmInfo(generics.ListCreateAPIView):
     def get_queryset(self):
@@ -721,15 +693,13 @@ class ApiAlarmInfo(generics.ListCreateAPIView):
             return AlarmInfo.objects.filter(tags=tags).order_by('id')
         else:
             return AlarmInfo.objects.all()
-
     serializer_class = AlarmInfoSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
-
 
 class ApiAlarmInfoHis(generics.ListCreateAPIView):
     queryset = AlarmInfo.objects.get_queryset().order_by('-id')
     serializer_class = AlarmInfoSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = ('tags',)
-    search_fields = ('tags', 'alarm_content',)
+    search_fields = ('tags','alarm_content',)
     permission_classes = (permissions.DjangoModelPermissions,)

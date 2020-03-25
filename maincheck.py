@@ -11,6 +11,7 @@ from multiprocessing import Process
 if __name__ == '__main__':
     # all minitoring servers
     linux_list = mysql_query('select tags,host,sshport,user,password from linux_list')
+
     oracle_list = mysql_query(
         'select t1.tags,t1.host,t1.port,t1.service_name,t1.db_user,t1.db_password,t1.db_user_cdb,t1.db_password_cdb,t1.service_name_cdb,'
         't2.user,t2.password,t2.sshport,t1.db_version from oracle_list t1 left join linux_list t2  on t1.linux_tags=t2.tags ')

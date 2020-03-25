@@ -8,8 +8,8 @@ def check_alarm():
     checklog.logger.info('初始化告警信息表')
     mysql_exec('insert into alarm_info_his select * from alarm_info')
     mysql_exec('delete from alarm_info')
-    check_list = mysql_query(
-        "select name,judge_value,judge_sql,judge_table,conf_table,conf_column from alarm_conf where judge_sql is not null and judge_table is not null")
+    check_list = mysql_query("select name,judge_value,judge_sql,judge_table,conf_table,conf_column from alarm_conf where judge_sql is not null and judge_table is not null")
+
     for each_check in check_list:
         alarm_name, judge_value,judge_sql,judge_table,conf_table,conf_column = each_check
         checklog.logger.info("开始告警检查：{}" .format(alarm_name))
