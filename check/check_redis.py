@@ -45,6 +45,13 @@ def check_redis(tags, redis_params):
         net_out_byte = redis_stat['total_net_output_bytes']
         redis_commandstats = redis_data['commandstats']
 
+        cmdstat_brpop=0
+        cmdstat_publish=0
+        cmdstat_setnx=0
+        cmdstat_exec=0
+        cmdstat_multi=0
+
+
         checklog.logger.info('{}：写入redis采集数据' .format(tags))
         clear_table(tags,'redis_stat')
 
@@ -56,9 +63,11 @@ def check_redis(tags, redis_params):
                           "{mem_fragmentation_ratio},{total_keys},{expire_keys},{connected_clients},{hits_all},{misses_all},{expired_keys},{evicted_keys},{hits},{misses}," \
                           "{command_count},{net_input_byte},{net_out_byte},{aof_delayed_fsync},{cmdstat_brpop},{cmdstat_publish},{cmdstat_setnx}," \
                           "{cmdstat_exec},{cmdstat_multi},0,'{check_time}' )"
-
+        print(">>>>>>>>insert_data_sql>>>>>>>>>>"+insert_data_sql)
+        #cmdstat_brpop
         insert_data_values = {**redis_info,**redis_stat,**redis_commandstats,**redis_config,**locals()}
         insert_sql = insert_data_sql.format(**insert_data_values)
+        print(">>>>>>>>insert_sql>>>>>>>>>>" + insert_sql)
         mysql_exec(insert_sql)
         archive_table(tags,'redis_stat')
         # 后台日志

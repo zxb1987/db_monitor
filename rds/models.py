@@ -35,7 +35,16 @@ class RedisStat(models.Model):
     cmdstat_multi = models.FloatField(blank=True, null=True)
     status = models.IntegerField("数据库连接状态 0成功 1失败",blank=True, null=True)
     check_time = models.DateTimeField("采集时间",default=timezone.now,blank=True, null=True)
-
+    # cmdstat_brpop=0
+    # cmdstat_publish=0
+    # cmdstat_setnx=0
+    # cmdstat_exec=0
+    # cmdstat_multi=0
+    cmdstat_brpop = models.IntegerField("备注1", blank=True, null=True)
+    cmdstat_publish = models.IntegerField("备注2", blank=True, null=True)
+    cmdstat_setnx = models.IntegerField("备注3", blank=True, null=True)
+    cmdstat_exec = models.IntegerField("备注4", blank=True, null=True)
+    cmdstat_multi = models.IntegerField("备注5", blank=True, null=True)
     def __str__(self):
         return self.tags
 
