@@ -70,9 +70,10 @@ class MonitoringInfoHis(models.Model):
         verbose_name_plural = verbose_name
 
 class MonitoringRun(models.Model):
-    type = models.IntegerField("采集源类型 1:Oracle数据库 2:MySQL数据库 3:Redis 4:Linux")
-    name = models.CharField("告警名称",max_length=128)
-    judge_sql = models.TextField("判断SQL")
+    name = models.CharField("业务名称",max_length=128)
+    mysql_list_id = models.CharField("数据库ID", max_length=255)
+    database_name = models.CharField("数据库名称",max_length=255)
+    monitoring_run_id = models.CharField("检测项目ID", max_length=255)
     check_time = models.DateTimeField("添加时间", default=timezone.now, blank=True, null=True)
     def __str__(self):
         return self.name
