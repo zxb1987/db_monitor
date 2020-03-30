@@ -333,11 +333,13 @@ class Menu(APIView):
                         'path': 'role-list',
                         'name': 'role-list',
                         'meta': {
-                            'access': ['assets.view_mysqllist'],
+                            # 获取后台model数据role:后台项目，view_rolelist：后台model类
+                            'access': ['role.view_rolelist'],
                             'icon': 'ios-menu',
                             'title': '角色管理'
                         },
                         'component': 'user/role-list'
+                        # 跳转前端
                     }
                     ,
                     {
