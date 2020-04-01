@@ -338,10 +338,12 @@ class Menu(APIView):
                         'path': 'role-list',
                         'name': 'role-list',
                         'meta': {
-                            'access': ['assets.view_rolelist'],
+                            # 后台APP所在文件夹，view_app访问model，view是固定格式
+                            'access': ['role.view_rolelist'],
                             'icon': 'ios-menu',
                             'title': '角色管理'
                         },
+                        # 传到前端的访问地址
                         'component': 'user/role-list'
                     }
                     ,
