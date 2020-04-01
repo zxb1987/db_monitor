@@ -19,6 +19,7 @@ class UserList(models.Model):
     fax = models.CharField("传真",max_length=32,blank=True,null=True)
     remarks = models.CharField("备注", max_length=32, blank=True, null=True)
     check_time = models.DateTimeField("添加时间", default=timezone.now, blank=True, null=True)
+
     def __str__(self):
         return self.user_name
 

@@ -150,4 +150,11 @@ Copyright © 2019 DB monitor
 
 python3 manage.py runserver 0.0.0.0:9998 &9998
 
+select round(b.value / 1024 / 1024, 1) pga_target,
+       round(a.pga_used_mb, 1),
+       round(a.pga_used_mb / (b.value / 1024 / 1024), 1) * 100  pga_used_pct
+  from (select sum(PGA_ALLOC_MEM) / 1024 / 1024 pga_used_mb from v$process) a,
+       v$parameter b
+ where b.name = 'pga_aggregate_target'
+
 
