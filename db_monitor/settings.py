@@ -102,11 +102,11 @@ AUTHENTICATION_BACKENDS = ('system.views.CustomBackend',)  ## 重新登录验证
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
+        'HOST': '114.116.16.6',
         'PORT': '3306',
-        'NAME': 'db_monitor',
+        'NAME': 'db_monitor_dev',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'jxnet_123qwe',
     }
 }
 
