@@ -53,11 +53,11 @@ class ApiMonitoringInfoHis(generics.ListCreateAPIView):
 
 
 class ApiMonitoringRun(generics.ListCreateAPIView):
-    queryset = MonitoringRun.objects.get_queryset().order_by('-type')
+    queryset = MonitoringRun.objects.get_queryset().order_by('-id')
     serializer_class = MonitoringRunSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('type','name',)
-    search_fields = ('type','name',)
+    filter_fields = ('name',)
+    search_fields = ('name',)
     permission_classes = (permissions.DjangoModelPermissions,)
 
 

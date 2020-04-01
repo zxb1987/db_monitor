@@ -6,7 +6,6 @@ from django.utils import timezone
 
 
 class MonitoringLog(models.Model):
-
     LOG_LEVEL = [
         ('error', 'error'),
         ('warn', 'warn'),
@@ -29,6 +28,7 @@ class MonitoringLog(models.Model):
         verbose_name = "日志解析采集数据"
         verbose_name_plural = verbose_name
 
+
 class MonitoringConfig(models.Model):
     type = models.IntegerField("采集源类型 1:Oracle数据库 2:MySQL数据库 3:Redis 4:Linux")
     name = models.CharField("告警名称",max_length=128)
@@ -41,6 +41,7 @@ class MonitoringConfig(models.Model):
         db_table = 'monitoring_config'
         verbose_name = "SQL配置"
         verbose_name_plural = verbose_name
+
 
 class MonitoringInfo(models.Model):
     tags = models.CharField("标签",max_length=32)
@@ -77,7 +78,6 @@ class MonitoringRun(models.Model):
     check_time = models.DateTimeField("添加时间", default=timezone.now, blank=True, null=True)
     def __str__(self):
         return self.name
-
     class Meta:
         db_table = 'monitoring_run'
         verbose_name = "监控运行"

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.authtoken import views
-
+from . import view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +31,5 @@ urlpatterns = [
     path('user/', include('user.urls', namespace='user')),
     path('monitoring/', include('monitoring.urls', namespace='monitoring')),
     path('app/', include('app.urls', namespace='app')),
-
+    path('host/', include('apps.host.urls')),
 ]
