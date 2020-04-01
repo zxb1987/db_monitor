@@ -276,7 +276,7 @@ class Menu(APIView):
                         'path': 'role-list',
                         'name': 'role-list',
                         'meta': {
-                            'access': ['assets.view_mysqllist'],
+                            'access': ['assets.view_rolelist'],
                             'icon': 'ios-menu',
                             'title': '角色管理'
                         },
