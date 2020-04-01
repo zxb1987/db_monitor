@@ -329,6 +329,7 @@ class Menu(APIView):
                         },
                         'component': 'user/user-list'
                     },
+
                     {
                         'path': 'role-list',
                         'name': 'role-list',
