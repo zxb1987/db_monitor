@@ -14,6 +14,6 @@ urlpatterns = [
     path('api/redis', views.ApiRedisList.as_view()),
     path('api/redis/<int:pk>', views.ApiRedisDetail.as_view()),
     # path('api/ssh/<int:h_id>', views.ApiWeb_ssh),
-    path('api/ssh/<int:h_id>', views.ApiWeb_ssh),
+    #path('api/ssh/<int:h_id>', views.ApiWeb_ssh),
 ]
 
