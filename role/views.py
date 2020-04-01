@@ -10,6 +10,7 @@ from role.serializers import RoleListSerializer
 class ApiRolelist(generics.ListCreateAPIView):
     def get_queryset(self):
         print("----------------views>ApiRolelist-----------------------")
+        print(1)
         id = self.request.query_params.get('id', None)
         role_name = self.request.query_params.get('role_name', None)
         role_code = self.request.query_params.get('role_code', None)
@@ -22,6 +23,7 @@ class ApiRolelist(generics.ListCreateAPIView):
 
 class ApiRoleDetail(generics.RetrieveUpdateDestroyAPIView):
     print("----------------views>ApiRoleDetail-----------------------")
+    print(1)
     queryset = RoleList.objects.get_queryset().order_by('role_code')
     print(queryset)
     serializer_class = RoleListSerializer

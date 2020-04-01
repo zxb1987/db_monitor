@@ -12,6 +12,7 @@ class RoleList(models.Model):
     role_update_date = models.DateTimeField('角色修改日期', default=timezone.now, blank=True, null=True)
 
     def __str__(self):
+        print(1)
         return self.role_name, self.role_code
 
     class Meta:
