@@ -1,11 +1,14 @@
 # encoding: utf-8
 
-from check.redis_stat import RedisStat
-from check.redis_logparser import get_redis_log
-import check.checklog as checklog
-from utils.tools import *
-import redis
 import time
+
+import redis
+
+import check.checklog as checklog
+from check.redis_logparser import get_redis_log
+from check.redis_stat import RedisStat
+from utils.tools import *
+
 
 def check_redis(tags, redis_params):
     check_time = now()

@@ -1,31 +1,11 @@
 # encoding:utf-8
 
-from .models import *
-from rest_framework import permissions
-from rest_framework import generics
-from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from rest_framework import generics
+from rest_framework import permissions
 
 from .serializers import *
-
-
-class ApiWeb_ssh(generics.ListCreateAPIView):
-    def web_ssh(request, h_id):
-        host = LinuxList.objects.filter(pk=h_id).first()
-        if not host:
-            return HttpResponseBadRequest('unknown host')
-        context = {'id': h_id, 'title': host.name, 'token': request.user.access_token}
-        return render(request, 'web_ssh.html', context)
-
-
-
-
-
-
-
-
-
-
 
 
 # Ecs Api           drf 中文文档   http://drf.jiuyou.info/#/drf/requests
