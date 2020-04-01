@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import sys
 import socket
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'monitoring.apps.MonitoringConfig',
     'app.apps.AppConfig',
+    'role.apps.RoleConfig'
 ]
 
 GRAPHENE = {
@@ -101,11 +102,11 @@ AUTHENTICATION_BACKENDS = ('system.views.CustomBackend',)  ## 重新登录验证
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '114.116.16.6',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'db_monitor_dev',
+        'NAME': 'db_monitor',
         'USER': 'root',
-        'PASSWORD': 'jxnet_123qwe',
+        'PASSWORD': '123456',
     }
 }
 

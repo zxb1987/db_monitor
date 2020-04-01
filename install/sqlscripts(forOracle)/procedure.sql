@@ -7,7 +7,7 @@ prompt
 prompt Creating function FUNCAS_FORMAT_NUM_OUTPUT
 prompt ==========================================
 prompt
-create or replace function dbmon.funcas_format_num_output(v_number  in number,
+create or replace function funcas_format_num_output(v_number  in number,
                                                     v_type in varchar2)
   return varchar2 is
   v_out_number varchar2(30);
@@ -72,7 +72,7 @@ prompt
 prompt Creating function REGEXP_NUMCOUNT_CAS
 prompt =====================================
 prompt
-create or replace function dbmon.regexp_numcount_cas(strstr  in varchar2,
+create or replace function regexp_numcount_cas(strstr  in varchar2,
                                                   pattern in varchar2 default '[[:digit:]]{1,}')
   return number is
   result_count number;
@@ -92,7 +92,7 @@ prompt
 prompt Creating procedure PROCAS_719_STANDARD_ROW_OUTPUT
 prompt =================================================
 prompt
-create or replace procedure dbmon.procas_719_standard_row_output(title_name in varchar2,
+create or replace procedure procas_719_standard_row_output(title_name in varchar2,
 column_num in number,
 column_len_str in varchar2,
 sep_flag in varchar2,
@@ -185,7 +185,7 @@ prompt
 prompt Creating procedure PRO_TOP_CPU_SQL
 prompt ==================================
 prompt
-create or replace procedure dbmon.pro_top_cpu_sql as
+create or replace procedure pro_top_cpu_sql as
   v_value        number;
   v_number       number;
   v_flag1        varchar2(200);
@@ -734,7 +734,7 @@ prompt
 prompt Creating procedure PRO_TOP_LOGIC_SQL
 prompt ====================================
 prompt
-create or replace procedure dbmon.pro_top_logic_sql as
+create or replace procedure pro_top_logic_sql as
   v_value      number;
   v_number     number;
   v_flag1      varchar2(200);
@@ -1298,7 +1298,7 @@ prompt
 prompt Creating procedure PRO_TOP_PHYS_SQL
 prompt ===================================
 prompt
-create or replace procedure dbmon.pro_top_phys_sql as
+create or replace procedure pro_top_phys_sql as
   v_value      number;
   v_number     number;
   v_flag1      varchar2(200);

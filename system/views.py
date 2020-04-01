@@ -77,25 +77,15 @@ class Menu(APIView):
 
         print('-------------------------Menu----------------------------------')
         result = [
-               {
+            {
                 "path": '/assets',
                 "name": 'assets',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": '主机管理'
+                    "title": '资源管理'
                 },
                 "component": 'Main',
                 "children": [
-                    {
-                        'path': 'linux-list',
-                        'name': 'linux-list',
-                        'meta': {
-                            'access': ['assets.view_linuxlist'],
-                            'icon': 'ios-menu',
-                            'title': 'Linux服务器'
-                        },
-                        'component': 'assets/linux-list'
-                    },
                     {
                         'path': 'oracle-list',
                         'name': 'oracle-list',
@@ -112,9 +102,19 @@ class Menu(APIView):
                         'meta': {
                             'access': ['assets.view_mysqllist'],
                             'icon': 'ios-menu',
-                            'title': 'MySql数据库'
+                            'title': 'MySQL数据库'
                         },
                         'component': 'assets/mysql-list'
+                    },
+                    {
+                        'path': 'linux-list',
+                        'name': 'linux-list',
+                        'meta': {
+                            'access': ['assets.view_linuxlist'],
+                            'icon': 'ios-menu',
+                            'title': 'Linux主机'
+                        },
+                        'component': 'assets/linux-list'
                     },
                     {
                         'path': 'redis-list',
@@ -122,7 +122,7 @@ class Menu(APIView):
                         'meta': {
                             'access': ['assets.view_redislist'],
                             'icon': 'ios-menu',
-                            'title': 'Redis缓存库'
+                            'title': 'Redis'
                         },
                         'component': 'assets/redis-list'
                     }
@@ -138,16 +138,6 @@ class Menu(APIView):
                 "component": 'Main',
                 "children": [
                     {
-                        'path': 'linux',
-                        'name': 'linux',
-                        'meta': {
-                            'icon': 'ios-menu',
-                            'title': 'Linux列表',
-                            'access': ['oracle.view_oraclestat'],
-                        },
-                        'component': 'linux/stat-list'
-                    },
-                    {
                         'path': 'oracle',
                         'name': 'oracle',
                         'meta': {
@@ -162,7 +152,7 @@ class Menu(APIView):
                         'name': 'mysql',
                         'meta': {
                             'icon': 'ios-menu',
-                            'title': 'MySql列表',
+                            'title': 'MySQL列表',
                             'access': ['mysql.view_mysqlstat'],
                         },
                         'component': 'mysql/stat-list'
@@ -176,8 +166,17 @@ class Menu(APIView):
                             'access': ['rds.view_redisstat'],
                         },
                         'component': 'redis/stat-list'
+                    },
+                    {
+                        'path': 'linux',
+                        'name': 'linux',
+                        'meta': {
+                            'icon': 'ios-menu',
+                            'title': 'Linux列表',
+                            'access': ['oracle.view_oraclestat'],
+                        },
+                        'component': 'linux/stat-list'
                     }
-
                 ],
 
             },
@@ -185,7 +184,7 @@ class Menu(APIView):
                 "path": '/alarm',
                 "name": 'alarm',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'ios-warning',
                     "title": '服务监控'
                 },
                 "component": 'Main',
@@ -216,8 +215,8 @@ class Menu(APIView):
                 "path": '/monitoring',
                 "name": 'monitoring',
                 "meta": {
-                    "icon": 'ios-cloud',
-                    "title": 'SQL监控'
+                    "icon": 'ios-warning',
+                    "title": '业务监控'
                 },
                 "component": 'Main',
                 "children": [
@@ -250,67 +249,6 @@ class Menu(APIView):
                             'title': '监控记录'
                         },
                         'component': 'monitoring/monitoring-info'
-                    }
-                ]
-            }, {
-                "path": '/app',
-                "name": 'app',
-                "meta": {
-                    "icon": 'ios-cloud',
-                    "title": '应用信息'
-                },
-                "component": 'Main',
-                "children": [
-                    {
-                        'path': 'app-config',
-                        'name': 'app-config',
-                        'meta': {
-                            'access': ['monitoring.view_monitoringrun'],
-                            'icon': 'ios-menu',
-                            'title': '应用配置'
-                        },
-                        'component': 'app/app-config'
-                    },
-                    {
-                        'path': 'app-info',
-                        'name': 'app-info',
-                        'meta': {
-                            'access': ['monitoring.view_monitoringinfo'],
-                            'icon': 'ios-menu',
-                            'title': '应用信息'
-                        },
-                        'component': 'app/app-info'
-                    }
-                ]
-            },
-            {
-                "path": '/report',
-                "name": 'report',
-                "meta": {
-                    "icon": 'ios-cloud',
-                    "title": '报告信息'
-                },
-                "component": 'Main',
-                "children": [
-                    {
-                        'path': 'business-report-list',
-                        'name': 'business-report-list',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '应用报告'
-                        },
-                        'component': 'user/user-list'
-                    },
-                    {
-                        'path': 'system-report-list',
-                        'name': 'system-report-list',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '系统报告'
-                        },
-                        'component': 'user/role-list'
                     }
                 ]
             },
@@ -364,6 +302,37 @@ class Menu(APIView):
                             'title': '资源管理'
                         },
                         'component': 'user/resource-list'
+                    }
+                ]
+            },
+            {
+                "path": '/report',
+                "name": 'report',
+                "meta": {
+                    "icon": 'ios-cloud',
+                    "title": '报告信息'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'business-report-list',
+                        'name': 'business-report-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '业务报告'
+                        },
+                        'component': 'user/user-list'
+                    },
+                    {
+                        'path': 'system-report-list',
+                        'name': 'system-report-list',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '系统报告'
+                        },
+                        'component': 'user/role-list'
                     }
                 ]
             },
