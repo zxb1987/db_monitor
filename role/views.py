@@ -9,6 +9,7 @@ from role.serializers import RoleListSerializer
 # Create your views here.
 class ApiRolelist(generics.ListCreateAPIView):
     def get_queryset(self):
+        print("----------------views>ApiRolelist-----------------------")
         id = self.request.query_params.get('id', None)
         role_name = self.request.query_params.get('role_name', None)
         role_code = self.request.query_params.get('role_code', None)
