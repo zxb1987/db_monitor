@@ -4,7 +4,6 @@ from utils import tools
 
 
 class RoleList(models.Model):
-
     role_name = models.CharField('角色名称', max_length=64, blank=True, null=False)
     role_code = models.IntegerField('角色代码', blank=True, null=True)
     role_status = models.BooleanField('角色状态', default=1)  # 1角色启用，0角色禁用

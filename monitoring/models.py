@@ -66,7 +66,6 @@ class MonitoringInfoHis(models.Model):
     alarm_header = models.CharField("告警标题", max_length=255)
     alarm_content = models.TextField("告警标题", )
     alarm_time = models.DateTimeField("告警时间")
-
     class Meta:
         db_table = 'monitoring_info_his'
         verbose_name = "告警信息"
@@ -74,9 +73,12 @@ class MonitoringInfoHis(models.Model):
 
 
 class MonitoringRun(models.Model):
-    type = models.IntegerField("采集源类型 1:Oracle数据库 2:MySQL数据库 3:Redis 4:Linux")
-    name = models.CharField("告警名称", max_length=128)
-    judge_sql = models.TextField("判断SQL")
+
+    name = models.CharField("SQL检测指标名称", max_length=128)
+    monitoring_run_id = models.CharField("SQL检测指标ID", max_length=128)
+    mysql_list_id = models.CharField("数据库服务ID", max_length=128)
+    database_name = models.CharField("数据库名称", max_length=128)
+
     check_time = models.DateTimeField("添加时间", default=timezone.now, blank=True, null=True)
 
     def __str__(self):
