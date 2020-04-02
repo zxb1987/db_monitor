@@ -15,15 +15,17 @@ class ApiRoleList(generics.ListCreateAPIView):
     queryset = RoleList.objects.get_queryset().order_by('id')
     serializer_class = RoleListSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('id', 'role_name',)
+    filter_fields = ('id',)
     search_fields = ('id', 'role_name', 'role_code', 'role_status', 'role_remark', 'role_add_date', 'role_update_date',)
-    ordering_fields = ('role_name', 'role_code', 'role_status', 'role_remark', 'role_add_date', 'role_update_date',)
+    ordering_fields = ('id','role_name', 'role_code', 'role_status', 'role_remark', 'role_add_date', 'role_update_date',)
+    # search_fields = ('id', 'role_name')
+    # ordering_fields = ('id', 'role_name')
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
 
 
 class ApiRoleDetail(generics.RetrieveUpdateDestroyAPIView):
     print("----------------views>ApiRoleDetail-----------------------")
     queryset = RoleList.objects.get_queryset().order_by('id')
-    #queryset = RoleList.objects.get_queryset().order_by('role_code')
+    # queryset = RoleList.objects.get_queryset().order_by('role_code')
     serializer_class = RoleListSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
