@@ -24,6 +24,6 @@ class ApiRoLelist(generics.ListCreateAPIView):
 class ApiRoleDetail(generics.RetrieveUpdateDestroyAPIView):
     print("----------------views>ApiRoleDetail-----------------------")
     queryset = RoleList.objects.get_queryset().order_by('id')
-    queryset = RoleList.objects.get_queryset().order_by('role_code')
+    #queryset = RoleList.objects.get_queryset().order_by('role_code')
     serializer_class = RoleListSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
