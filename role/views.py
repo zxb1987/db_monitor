@@ -11,7 +11,7 @@ from role.serializers import RoleListSerializer
 
 
 # Create your views here.
-class ApiRolelist(generics.ListCreateAPIView):
+class ApiRoLelist(generics.ListCreateAPIView):
     queryset = RoleList.objects.get_queryset().order_by('id')
     serializer_class = RoleListSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
