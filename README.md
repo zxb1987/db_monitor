@@ -58,7 +58,7 @@ create database db_monitor;
 #### 5. 项目配置
 
 ##### 下载源代码
-git clone https://github.com/zxb1987/db_monitor.git
+git clone https://github.com/zxb1987/db_monitor
 
 ##### 安装依赖包
 pip install -r requirements.txt
@@ -105,7 +105,7 @@ celery –A db_monitor beat –l info
 
 
 #### 7. 前端配置
-请参考：[db_monitor_vue](https://github.com/zxb1987/db_monitor_vue.git)
+请参考：[db_monitor_vue](https://github.com/zxb1987/db_monitor_vue)
 
 #### 8. oracle数据库监控
 对Oracle数据库监控，请在被监控端建立用户，并执行install/sqlscripts(forOracle)中的脚本
