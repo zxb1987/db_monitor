@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/monitoring-info', views.ApiMonitoringInfo.as_view()),
     path('api/monitoring-run', views.ApiMonitoringRun.as_view()),
     path('api/monitoring-run/<int:pk>', views.ApiMonitoringRunDetail.as_view()),
+
 ]

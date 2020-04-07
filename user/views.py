@@ -18,10 +18,6 @@ class ApiUserList(generics.ListCreateAPIView):
     logger.error('error message')
     logger.critical('critical message')
 
-
-
-
-
     queryset = UserList.objects.get_queryset().order_by('id')
     serializer_class = UserListSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)

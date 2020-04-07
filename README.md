@@ -8,6 +8,8 @@
 ![](https://img.shields.io/badge/python-3.6-brightgreen.svg)
 ![](https://img.shields.io/badge/Django-2.2-brightgreen.svg)
 
+
+后端：https://github.com/zxb1987/db_monitor.git
 ## 特性
 - **构建**: 前后端分离架构，Python+Django+restframework提供后台API，celery定制数据采集策略，Iview作为前端展示
 - **UI**: 开箱即用的高质量前端设计，提供丰富的图表、指标展示，核心数据形成趋势图分析
@@ -29,12 +31,16 @@
     
 - Vue.js 2.9
     - iview 3.4
-
-## 平台使用
-- [在线访问](http://122.51.204.250:8080/) (推荐使用chrome浏览器访问)
+    
+快速开始
+===============
+###  平台使用
+- [在线访问](http://114.116.16.6:9992/) (推荐使用chrome浏览器访问)
   
-用户名：admin 
-密码：111111
+| 账号 | 密码 |
+| --- | --- |
+| admin | 123qwe |
+
 
 ## 安装部署
 #### 1. 安装python3.6(略)
@@ -52,7 +58,7 @@ create database db_monitor;
 #### 5. 项目配置
 
 ##### 下载源代码
-git clone https://github.com/gumengkai/db_monitor
+git clone https://github.com/zxb1987/db_monitor.git
 
 ##### 安装依赖包
 pip install -r requirements.txt
@@ -96,19 +102,10 @@ celery –A db_monitor worker –l info
 celery –A db_monitor beat –l info
 
 
-sed -i 's/\r$//' start.sh 
-杀进程用:
-ps aux | grep python3 |  awk '{print $2}' | xargs kill -9
-遇到celery问题
-{
-终端： 
-export PATH=/usr/local/python3/bin:$PATH      # 我的Python3资源文件都放在 /usr/local/python3 文件夹下
-  终端： 
-sudo echo 'export PATH=/usr/local/python3/bin:$PATH' >> /etc/profile.d/python3.sh  # 避免重启丢失
-}
+
 
 #### 7. 前端配置
-请参考：[db_monitor_vue](https://github.com/gumengkai/db_monitor_vue)
+请参考：[db_monitor_vue](https://github.com/zxb1987/db_monitor_vue.git)
 
 #### 8. oracle数据库监控
 对Oracle数据库监控，请在被监控端建立用户，并执行install/sqlscripts(forOracle)中的脚本
@@ -145,8 +142,28 @@ grant.sql & table.sql & procedure.sql
 ## 交流学习
 - QQ群 916746047
 
+贡献者
+===============
+![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/0)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/1)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/2)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/3)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/4)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/5)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/6)![](https://sourcerer.io/fame/hhyo/hhyo/archery/images/7)
+
 Copyright © 2019 DB monitor
 
+
+
+
+
+
+
+sed -i 's/\r$//' start.sh 
+杀进程用:
+ps aux | grep python3 |  awk '{print $2}' | xargs kill -9
+遇到celery问题
+{
+终端： 
+export PATH=/usr/local/python3/bin:$PATH      # 我的Python3资源文件都放在 /usr/local/python3 文件夹下
+  终端： 
+sudo echo 'export PATH=/usr/local/python3/bin:$PATH' >> /etc/profile.d/python3.sh  # 避免重启丢失
+}
 
 python3 manage.py runserver 0.0.0.0:9998 &9998
 

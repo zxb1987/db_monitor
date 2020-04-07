@@ -17,6 +17,8 @@ class ApiOracleList(generics.ListCreateAPIView):
     search_fields = ('tags', 'host',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
 
+
+
 class ApiOracleDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = OracleList.objects.get_queryset().order_by('id')
     serializer_class = OracleListSerializer
