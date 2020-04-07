@@ -140,7 +140,7 @@ grant.sql & table.sql & procedure.sql
 
 
 ## 交流学习
-- QQ群 916746047
+- QQ群 693147566
 
 贡献者
 ===============
