@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'monitoring.apps.MonitoringConfig',
     'app.apps.AppConfig',
-    'role.apps.RoleConfig'
+    'role.apps.RoleConfig',
+    'maintaintools.apps.MaintainToolsConfig',
 ]
 
 GRAPHENE = {

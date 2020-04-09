@@ -31,5 +31,6 @@ urlpatterns = [
     path('monitoring/', include('monitoring.urls', namespace='monitoring')),
     path('app/', include('app.urls', namespace='app')),
     path('role/', include('role.urls', namespace='role')),
+    path('maintaintools/', include('maintaintools.urls', namespace='maintaintools')),
 
 ]
