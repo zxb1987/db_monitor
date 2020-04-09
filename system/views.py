@@ -69,12 +69,6 @@ class CustomBackend(ModelBackend):
 class Menu(APIView):
 
     def post(self, request):
-
-
-
-
-
-
         print('-------------------------Menu----------------------------------')
         result = [
                {
@@ -217,7 +211,7 @@ class Menu(APIView):
                 "name": 'monitoring',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": 'SQL监控'
+                    "title": 'sql监控'
                 },
                 "component": 'Main',
                 "children": [
@@ -250,9 +244,42 @@ class Menu(APIView):
                             'title': '监控记录'
                         },
                         'component': 'monitoring/monitoring-info'
-                    }
+                    },
+
                 ]
-            }, {
+            },
+            {
+                "path": '/maintaintools',
+                "name": 'maintaintools',
+                "meta": {
+                    "icon": 'ios-cloud',
+                    "title": '运维工具'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'command-list',
+                        'name': 'command-list',
+                        'meta': {
+                            'access': ['maintaintools.view_maintaincommand'],
+                            'icon': 'ios-menu',
+                            'title': '命令控制台'
+                        },
+                        'component': 'maintaintools/command-list'
+                    },
+                    {
+                        'path': 'maintaintools-file',
+                        'name': 'maintaintools-file',
+                        'meta': {
+                            'access': ['maintaintools.view_maintaincommand'],
+                            'icon': 'ios-menu',
+                            'title': 'ssh文件管理'
+                        },
+                        'component': 'maintaintools/maintaintools-file'
+                    },
+                ]
+            },
+            {
                 "path": '/app',
                 "name": 'app',
                 "meta": {
@@ -265,7 +292,7 @@ class Menu(APIView):
                         'path': 'app-config',
                         'name': 'app-config',
                         'meta': {
-                            'access': ['monitoring.view_monitoringrun'],
+                            'access': ['app.view_applist'],
                             'icon': 'ios-menu',
                             'title': '应用配置'
                         },
@@ -275,7 +302,7 @@ class Menu(APIView):
                         'path': 'app-info',
                         'name': 'app-info',
                         'meta': {
-                            'access': ['monitoring.view_monitoringinfo'],
+                            'access': ['app.view_applist'],
                             'icon': 'ios-menu',
                             'title': '应用信息'
                         },

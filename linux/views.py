@@ -40,6 +40,7 @@ class ApiLinuxStatHis(generics.ListCreateAPIView):
 # all instance
 class ApiLinuxStatList(generics.ListCreateAPIView):
     queryset = LinuxStat.objects.get_queryset().order_by('-status')
+    print('linux列表',queryset)
     serializer_class = LinuxStatSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = ('tags', 'host','status')

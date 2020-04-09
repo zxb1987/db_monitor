@@ -53,8 +53,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'monitoring.apps.MonitoringConfig',
     'app.apps.AppConfig',
-    'role.apps.RoleConfig',
-     'webssh.apps.WebsshConfig',  # 网页远程ssh终端
+    'role.apps.RoleConfig'
 ]
 
 GRAPHENE = {
@@ -103,11 +102,11 @@ AUTHENTICATION_BACKENDS = ('system.views.CustomBackend',)  ## 重新登录验证
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '114.116.16.6',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'db_monitor_dev',
+        'NAME': 'db_monitor',
         'USER': 'root',
-        'PASSWORD': 'jxnet_123qwe',
+        'PASSWORD': '123456',
     }
 }
 
@@ -157,36 +156,35 @@ STATICFILES_DIRS = (
 )
 
 # logging
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             'format': '[argus] %(levelname)s %(asctime)s %(module)s %(message)s'
-#         }
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'stream': sys.stdout,
-#             'formatter': 'verbose'
-#         },
-#     },
-#     'loggers': {
-#         'tasks': {
-#             'handlers': ['console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'asset': {
-#             'handlers': ['console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[argus] %(levelname)s %(asctime)s %(module)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'tasks': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'asset': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 # 表格table
 PAGINATION_SETTINGS = {
