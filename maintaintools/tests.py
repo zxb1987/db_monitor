@@ -1,32 +1,47 @@
-from utils import tools
 import paramiko
+from django.http import HttpResponse
+import requests
+import json
 
-date = tools.now()
-print(
-    date
-)
-
-
-# 实例化SSHClient
-client = paramiko.SSHClient()
-
-# 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-# 连接SSH服务端，以用户名和密码进行认证
-client.connect(hostname='192.168.1.25', port=22, username='root', password='lecent123')
-
-# 打开一个Channel并执行命令
-stdin, stdout, stderr = client.exec_command('cat /home/config.log')  # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值
-
-# 打印执行结果
-print(stdout.read().decode('utf-8'))
-print(stderr.read().decode('utf-8'))
-
-# 关闭SSHClient
-client.close()
+# from utils import tools
+# import paramiko
 #
-# class SSHClient(object):
+# date = tools.now()
+# print(
+#     date
+# )
+
+def hello(requests,args=None):
+    val=json.loads(requests.body)
+    print(val)
+
+
+
+    return HttpResponse('123456')
+
+
+#
+# # 实例化SSHClient
+# client = paramiko.SSHClient()
+#
+# # 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接
+# client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+#
+# # 连接SSH服务端，以用户名和密码进行认证
+# client.connect(hostname='192.168.1.25', port=22, username='root', password='lecent123')
+#
+# # 打开一个Channel并执行命令
+# stdin, stdout, stderr = client.exec_command('cat /home/config.log')  # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值
+#
+# # 打印执行结果
+# print(stdout.read().decode('utf-8'))
+# print(stderr.read().decode('utf-8'))
+#
+# # 关闭SSHClient
+# client.close()
+#
+# class SSHClient(requests):
+#     print(requests)
 #     def __init__(self, params):
 #         self.params = params
 #         self.hostname = self.params['hostname']
@@ -48,13 +63,6 @@ client.close()
 #             sftp_client = paramiko.SFTPClient.from_transport(t)
 #             print("sftp_client")
 #             print(sftp_client)
-#             # # 设置上传的本地/远程文件路径
-#             # localpath = "/Users/root/Downloads/1.txt"
-#             # remotepath = "/tmp/1.txt"
-#             # 执行上传动作
-#             # sftp.put(localpath, remotepath)
-#             # # 执行下载动作
-#             # sftp.get(remotepath, localpath)
 #             return ssh_client, sftp_client
 #         except Exception as e:
 #             print("linux 链接错误")
@@ -73,8 +81,8 @@ client.close()
 #         return {
 #             'app_url': app_url
 #         }
-#
-#
+
+
 # if __name__ == '__main__':
 #     params = {
 #         'hostname': '192.168.1.25',
