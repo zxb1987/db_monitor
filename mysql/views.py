@@ -87,14 +87,6 @@ def Mysql_Excute(request):
             data = []
             for res in df:
                 data.append(dict(zip(column_list,list(res))))
-                # str1 = json.dumps(data,ensure_ascii=False)
-            #以下方式是多层循环遍历所有值进行封装
-            # for res in row:
-            #     rows={}
-            #     for i in range(len(index) - 1):
-            #         rows[index[i][0]] = res[i]
-            #         data.append(rows)
-            # return HttpResponse(json.dumps(data),content_type="application/json")
             print(data)
             return JsonResponse(data, safe=False)
         except Exception as e:
