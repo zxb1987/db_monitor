@@ -226,6 +226,16 @@ class Menu(APIView):
                         'component': 'monitoring/monitoring-config'
                     },
                     {
+                        'path': 'monitoring-querying',
+                        'name': 'monitoring-querying',
+                        'meta': {
+                            'access': ['monitoring.view_monitoringconfig'],
+                            'icon': 'ios-menu',
+                            'title': '在线查询'
+                        },
+                        'component': 'monitoring/monitoring-querying'
+                    },
+                    {
                         'path': 'monitoring-run',
                         'name': 'monitoring-run',
                         'meta': {
