@@ -16,5 +16,22 @@ class MaintainCommand(models.Model):
 
     class Meta:
         db_table = 'maintain_command'
+        verbose_name = "命令列表"
+        verbose_name_plural = verbose_name
+
+
+class SshExecCommand(models.Model):
+    tags = models.CharField("标签", max_length=32, unique=True)
+    host = models.CharField("主机ip", max_length=32)
+    user = models.CharField("主机用户名", max_length=32)
+    password = models.CharField("主机用户密码", max_length=255)
+    sshport = models.IntegerField("主机ssh端口号", default=22)
+    execresult = models.TextField("执行结果", max_length=5000)
+
+    def __str__(self):
+        return self.tags
+
+    class Meta:
+        db_table = 'sshexec_command'
         verbose_name = "命令运行"
         verbose_name_plural = verbose_name

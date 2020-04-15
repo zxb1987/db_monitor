@@ -55,8 +55,6 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'role.apps.RoleConfig',
     'maintaintools.apps.MaintainToolsConfig',
-
-     #'webssh.apps.WebsshConfig',  # 网页远程ssh终端
 ]
 
 GRAPHENE = {

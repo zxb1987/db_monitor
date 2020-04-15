@@ -10,10 +10,10 @@ from user.models import UserList
 def hello(request):
 
     mysql_params = {
-        'host': '114.116.16.6',
+        'host': '127.0.0.1',
         'port': 3306,
         'user': 'root',
-        'password': 'jxnet_123qwe'
+        'password': 'root123'
     }
     sql = "show DATABASES"
 

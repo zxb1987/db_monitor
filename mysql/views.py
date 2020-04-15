@@ -1,4 +1,10 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+# from mysql.connector import connection
+import json
+import numpy as np
+import pandas as pd
+from django.db import connection
 
 from .models import *
 from rest_framework import permissions
@@ -53,3 +59,41 @@ class ApiMysqlSlowquery(generics.ListCreateAPIView):
     filter_fields = ('tags', 'host',)
     search_fields = ('tags', 'host',)
     permission_classes = (permissions.DjangoModelPermissions,)
+
+
+def Mysql_Excute(request):
+    if request.method == 'GET':
+        return HttpResponse('{"status":"0","message":"后台判断返回失败!!","result":"null"}')
+    elif request.method == 'POST':
+        req = str(request.body ,'utf-8')
+        print("前端的值：" + req)
+        try:
+            cursor = connection.cursor()
+            cursor.execute(req)
+            # cursor.commit()
+            row = cursor.fetchall()
+            # print(row)
+            index = cursor.description
+            # print(index)
+            # 获取每条数据的ID
+            # row_id = [x[0] for x in row]
+            # print(row_id)
+            #获取列名
+            column_list = {}
+            for i in range(len(index) - 1):
+                column_list[index[i][0]] = index[i]
+            df = np.array(row)
+            # print(column_list)
+            data = []
+            for res in df:
+                data.append(dict(zip(column_list,list(res))))
+            print(data)
+            return JsonResponse(data, safe=False)
+        except Exception as e:
+            print(e)
+            return HttpResponse('{"status":"0","message":"查询失败!!","result":"null"}')
+    #方式一
+    # return HttpResponse(json.dumps(data),content_type="application/json")
+    #方式2
+    # return JsonResponse(data,safe=False)
+
