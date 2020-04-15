@@ -13,5 +13,13 @@ urlpatterns = [
     path('api/linux/<int:pk>', views.ApiLinuxDetail.as_view()),
     path('api/redis', views.ApiRedisList.as_view()),
     path('api/redis/<int:pk>', views.ApiRedisDetail.as_view()),
+    path('api/test', views.AppView.as_view()),
+    path('api/test/<int:r_id>/', views.AppView.as_view()),
+
+
+
+
+
+
 ]
 

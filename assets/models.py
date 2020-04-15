@@ -166,6 +166,9 @@ class LinuxList(models.Model):
     def __str__(self):
         return self.tags
 
+
+
+
     class Meta:
         db_table = 'linux_list'
         verbose_name = "Linux主机"

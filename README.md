@@ -97,6 +97,7 @@ python manage.py createsuperuser(创建登录用户)
 #### 6. 启动
 python manage.py runserver
 nohup python3 manage.py runserver 0.0.0.0:9998&
+
 celery –A db_monitor worker –l info
 
 celery –A db_monitor beat –l info
@@ -175,3 +176,9 @@ select round(b.value / 1024 / 1024, 1) pga_target,
  where b.name = 'pga_aggregate_target'
 
 
+
+nohup python3 run.py&
+
+
+
+http://codingdict.com/sources/py/rest_framework.parsers/18886.html

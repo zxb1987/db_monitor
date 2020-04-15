@@ -529,6 +529,9 @@ class LinuxStat(LinuxBase):
         command = 'df -k'
         res = super().exec_command(command,self.conn)
         disk_list = [line.split() for line in res]
+        print("======================================================")
+        print(disk_list)
+
         for each in disk_list:
             if  each[0] == '文件系统' or each[0] == '1K - 块' or each[0] == '已用' or each[0] == '可用' or each[0] == '已用 %' or each[0] == '挂载点' or each[0] == 'Filesystem' or each[0] == 'none' or each[0] == 'udev' or each[0] in "tmpfs":
                 continue

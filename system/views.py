@@ -211,7 +211,7 @@ class Menu(APIView):
                 "name": 'monitoring',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": 'sql监控'
+                    "title": 'SQL监控'
                 },
                 "component": 'Main',
                 "children": [
@@ -276,12 +276,14 @@ class Menu(APIView):
                             'title': '命令控制台'
                         },
                         'component': 'maintaintools/command-list'
-                    },
+                    }
+                    ,
                     {
                         'path': 'maintaintools-file',
                         'name': 'maintaintools-file',
                         'meta': {
                             'access': ['maintaintools.view_maintaincommand'],
+
                             'icon': 'ios-menu',
                             'title': 'ssh文件管理'
                         },
