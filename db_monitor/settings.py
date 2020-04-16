@@ -107,7 +107,7 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'db_monitor',
         'USER': 'root',
-        'PASSWORD': 'root123',
+        'PASSWORD': '123456',
     }
 }
 
