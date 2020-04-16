@@ -29,8 +29,8 @@ class ApiMaintainCommandDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class GetPaerm(View):
-    def post(self, request, r_id):
-        queryset = MaintainCommand.objects.get(id=r_id)
+    def post(self, request, ssh_id):
+        queryset = MaintainCommand.objects.get(id=ssh_id)
         ssh_cmd = queryset.usecommand + ' ' + queryset.commandparam
         val = json.loads(request.body)
         allval = []
