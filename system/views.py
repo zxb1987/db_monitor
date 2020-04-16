@@ -179,7 +179,7 @@ class Menu(APIView):
                 "path": '/alarm',
                 "name": 'alarm',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'md-git-network',
                     "title": '服务监控'
                 },
                 "component": 'Main',
@@ -210,7 +210,7 @@ class Menu(APIView):
                 "path": '/monitoring',
                 "name": 'monitoring',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'md-analytics',
                     "title": 'sql监控'
                 },
                 "component": 'Main',
@@ -262,7 +262,7 @@ class Menu(APIView):
                 "path": '/maintaintools',
                 "name": 'maintaintools',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'md-build',
                     "title": '运维工具'
                 },
                 "component": 'Main',
@@ -293,7 +293,7 @@ class Menu(APIView):
                 "path": '/app',
                 "name": 'app',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'ios-apps',
                     "title": '应用信息'
                 },
                 "component": 'Main',
@@ -324,7 +324,7 @@ class Menu(APIView):
                 "path": '/report',
                 "name": 'report',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'md-alert',
                     "title": '报告信息'
                 },
                 "component": 'Main',
@@ -356,7 +356,7 @@ class Menu(APIView):
                 "path": '/user',
                 "name": 'user',
                 "meta": {
-                    "icon": 'ios-cloud',
+                    "icon": 'md-settings',
                     "title": '系统管理'
                 },
                 "component": 'Main',
