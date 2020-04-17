@@ -1,20 +1,19 @@
-from django.shortcuts import render
-
 import json
 import logging
-from rest_framework.views import APIView
+
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
+from django.shortcuts import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.authtoken.models import Token
-from django.shortcuts import render, HttpResponse
-from django.contrib.auth.backends import ModelBackend
+from rest_framework.views import APIView
+
 from system.models import Users
-from django.db.models import Q
-from .models import AlertLog,AlarmConf,AlarmInfo
-from rest_framework import permissions
-from rest_framework import generics
-from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import AlertLogSerializer,AlarmConfSerializer,AlarmInfoSerializer
+from .models import AlertLog, AlarmConf, AlarmInfo
+from .serializers import AlertLogSerializer, AlarmConfSerializer, AlarmInfoSerializer
 
 logger = logging.getLogger('system')
 
@@ -67,9 +66,7 @@ class CustomBackend(ModelBackend):
             return None
 
 class Menu(APIView):
-
     def post(self, request):
-
         result = [
                {
                 "path": '/assets',
