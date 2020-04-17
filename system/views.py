@@ -17,6 +17,7 @@ from .serializers import AlertLogSerializer, AlarmConfSerializer, AlarmInfoSeria
 
 logger = logging.getLogger('system')
 
+
 class UserInfo(APIView):
     """
     获取用户信息
@@ -35,6 +36,7 @@ class UserInfo(APIView):
             'avatar': 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
         }
         return HttpResponse(json.dumps(result))
+
 
 class UserLogout(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -65,10 +67,11 @@ class CustomBackend(ModelBackend):
             logger.error(e)
             return None
 
+
 class Menu(APIView):
     def post(self, request):
         result = [
-               {
+            {
                 "path": '/assets',
                 "name": 'assets',
                 "meta": {
@@ -727,28 +730,30 @@ class Menu(APIView):
         ]
         return HttpResponse(json.dumps(result))
 
+
 class ApiAlertLog(generics.ListAPIView):
     queryset = AlertLog.objects.all().order_by('-log_time')
     serializer_class = AlertLogSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filter_fields = ['tags','log_level']
+    filter_fields = ['tags', 'log_level']
     search_fields = ['log_content']
     permission_classes = (permissions.DjangoModelPermissions,)
-
 
 
 class ApiAlarmConf(generics.ListCreateAPIView):
     queryset = AlarmConf.objects.get_queryset().order_by('-type')
     serializer_class = AlarmConfSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('type','name',)
-    search_fields = ('type','name',)
+    filter_fields = ('type', 'name',)
+    search_fields = ('type', 'name',)
     permission_classes = (permissions.DjangoModelPermissions,)
+
 
 class ApiAlarmConfDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = AlarmConf.objects.get_queryset().order_by('id')
     serializer_class = AlarmConfSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
+
 
 class ApiAlarmInfo(generics.ListCreateAPIView):
     def get_queryset(self):
@@ -757,13 +762,15 @@ class ApiAlarmInfo(generics.ListCreateAPIView):
             return AlarmInfo.objects.filter(tags=tags).order_by('id')
         else:
             return AlarmInfo.objects.all()
+
     serializer_class = AlarmInfoSerializer
     permission_classes = (permissions.DjangoModelPermissions,)
+
 
 class ApiAlarmInfoHis(generics.ListCreateAPIView):
     queryset = AlarmInfo.objects.get_queryset().order_by('-id')
     serializer_class = AlarmInfoSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = ('tags',)
-    search_fields = ('tags','alarm_content',)
+    search_fields = ('tags', 'alarm_content',)
     permission_classes = (permissions.DjangoModelPermissions,)
