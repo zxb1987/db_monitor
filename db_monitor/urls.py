@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from rest_framework.authtoken import views
 
-from . import view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth',views.obtain_auth_token),
@@ -31,6 +31,6 @@ urlpatterns = [
     path('monitoring/', include('monitoring.urls', namespace='monitoring')),
     path('app/', include('app.urls', namespace='app')),
     path('role/', include('role.urls', namespace='role')),
-    path('hello/<int:h_id>/', view.test),
     path('maintaintools/', include('maintaintools.urls', namespace='maintaintools')),
+
 ]

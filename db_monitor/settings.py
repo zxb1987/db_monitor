@@ -61,7 +61,7 @@ GRAPHENE = {
     'SCHEMA': 'db_monitor.schema.schema'
 }
 
-# django 中的中间件（middleware），在django中，中间件其实就是一个类，在请求到来和结束后，django会根据自己的规则在合适的时机执行中间件中相应的方法
+#django 中的中间件（middleware），在django中，中间件其实就是一个类，在请求到来和结束后，django会根据自己的规则在合适的时机执行中间件中相应的方法
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -103,11 +103,11 @@ AUTHENTICATION_BACKENDS = ('system.views.CustomBackend',)  ## 重新登录验证
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '114.116.16.6',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'db_monitor_dev',
+        'NAME': 'db_monitor',
         'USER': 'root',
-        'PASSWORD': 'jxnet_123qwe',
+        'PASSWORD': 'root123',
     }
 }
 
@@ -157,36 +157,35 @@ STATICFILES_DIRS = (
 )
 
 # logging
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             'format': '[argus] %(levelname)s %(asctime)s %(module)s %(message)s'
-#         }
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'INFO',
-#             'class': 'logging.StreamHandler',
-#             'stream': sys.stdout,
-#             'formatter': 'verbose'
-#         },
-#     },
-#     'loggers': {
-#         'tasks': {
-#             'handlers': ['console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'asset': {
-#             'handlers': ['console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[argus] %(levelname)s %(asctime)s %(module)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'tasks': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'asset': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 # 表格table
 PAGINATION_SETTINGS = {
