@@ -15,9 +15,9 @@ class ApiMaintainCommandList(generics.ListCreateAPIView):
     queryset = MaintainCommand.objects.get_queryset().order_by('id')
     serializer_class = MaintainToolsSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('id',)
-    search_fields = ('id', 'commname', 'usecommand', 'commandparam')
-    ordering_fields = ('id', 'commname', 'usecommand', 'commandparam')
+    filter_fields = ('commname','usecommand',) # 前台传值进行匹配搜索
+    search_fields = ('commname','usecommand',)
+    ordering_fields = ('commname','usecommand',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
 
 

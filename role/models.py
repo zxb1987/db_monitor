@@ -19,3 +19,5 @@ class RoleList(models.Model):
         db_table = 'role_list'
         verbose_name = '角色信息表'
         verbose_name_plural = verbose_name
+
+

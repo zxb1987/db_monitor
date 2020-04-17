@@ -171,9 +171,7 @@ class Menu(APIView):
                         },
                         'component': 'redis/stat-list'
                     }
-
                 ],
-
             },
             {
                 "path": '/alarm',
@@ -382,8 +380,7 @@ class Menu(APIView):
                         },
                         # 传到前端的访问地址
                         'component': 'user/role-list'
-                    }
-                    ,
+                    },
                     {
                         'path': 'permissions-list',
                         'name': 'permissions-list',
@@ -406,7 +403,6 @@ class Menu(APIView):
                     }
                 ]
             },
-
             {
                 "path": '/oracle',
                 "name": 'Oracle',

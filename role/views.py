@@ -19,10 +19,9 @@ class ApiRoleList(generics.ListCreateAPIView):
     queryset = RoleList.objects.get_queryset().order_by('id')
     serializer_class = RoleListSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('id',)
-    search_fields = ('id', 'role_name', 'role_code', 'role_status', 'role_remark', 'role_add_date', 'role_update_date',)
-    ordering_fields = (
-    'id', 'role_name', 'role_code', 'role_status', 'role_remark', 'role_add_date', 'role_update_date',)
+    filter_fields = ('role_name', 'role_code','role_remark',)
+    search_fields = ('role_name', 'role_code','role_remark',)
+    ordering_fields = ('role_name', 'role_code','role_remark',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
 
 
