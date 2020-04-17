@@ -69,7 +69,7 @@ class CustomBackend(ModelBackend):
 class Menu(APIView):
 
     def post(self, request):
-        print('-------------------------Menu----------------------------------')
+
         result = [
                {
                 "path": '/assets',
@@ -287,6 +287,7 @@ class Menu(APIView):
                     },
                 ]
             },
+
             {
                 "path": '/app',
                 "name": 'app',
