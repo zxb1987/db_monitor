@@ -287,6 +287,7 @@ class Menu(APIView):
                     },
                 ]
             },
+
             {
                 "path": '/app',
                 "name": 'app',
