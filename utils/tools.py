@@ -1,8 +1,9 @@
 # encoding:utf-8
 import os
+from datetime import datetime, timedelta
+
 import pytz
-from pytz import timezone
-from datetime import datetime,timedelta
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'db_monitor.settings'
 from django.conf import settings
 from utils.mysql_base import MysqlBase
@@ -94,6 +95,6 @@ def get_oracle_params(tags):
     }
 
 if __name__ == '__main__':
-    loctime = '2019-12-10 08:30:39'
+    loctime = '2019-12-10 00:00:00'
     print(type(get_utctime(loctime)))
     print(now())

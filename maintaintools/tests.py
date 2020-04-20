@@ -1,7 +1,9 @@
-import paramiko
-from django.views import View
-from django.http import HttpResponse
 import json
+
+import paramiko
+from django.http import HttpResponse
+from django.views import View
+
 from maintaintools.models import MaintainCommand
 
 
@@ -39,3 +41,5 @@ class getpaerm(View):
         client.close()
 
         return HttpResponse(text_commd)
+
+

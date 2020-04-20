@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from utils import tools
 
 
 class MaintainCommand(models.Model):
@@ -21,12 +20,14 @@ class MaintainCommand(models.Model):
 
 
 class SshExecCommand(models.Model):
-    tags = models.CharField("标签", max_length=32, unique=True)
+    tags = models.CharField("标签", max_length=32)
     host = models.CharField("主机ip", max_length=32)
     user = models.CharField("主机用户名", max_length=32)
     password = models.CharField("主机用户密码", max_length=255)
     sshport = models.IntegerField("主机ssh端口号", default=22)
-    execresult = models.TextField("执行结果", max_length=5000)
+    ssh_cmd = models.CharField('执行的命令', max_length=200, blank=True)
+    createtime_ssh = models.DateTimeField("执行时间", default=timezone.now, blank=True, null=True)
+    execresult = models.TextField("执行结果", max_length=5000, blank=True, null=True)
 
     def __str__(self):
         return self.tags
