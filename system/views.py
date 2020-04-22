@@ -283,7 +283,7 @@ class Menu(APIView):
                             'icon': 'ios-menu',
                             'title': 'ssh文件管理'
                         },
-                        'component': 'maintaintools/maintaintools-file'
+                        'component': 'maintaintools/manageinfo-file'
                     },
                 ]
             },
