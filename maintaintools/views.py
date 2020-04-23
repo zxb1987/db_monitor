@@ -61,7 +61,7 @@ class GetPaerm(View):
                 # 关闭SSHClient
                 client.close()
             except Exception as e:
-                print(tags,'服务器连接失败！请检查登录的用户名密码是否正确！！')
+                print(tags, '服务器连接失败！请检查登录的用户名密码是否正确！！')
                 print(e)
 
             # print('数据库保存开始')
@@ -70,3 +70,17 @@ class GetPaerm(View):
 
             sshalldate.save()
         return HttpResponse(text_commd)
+
+
+# 文件上传后的记录表
+class ApiUploadDownFileList(generics.ListCreateAPIView):
+    queryset = UploadDownFileInfo.objects.get_queryset().order_by('id')
+    serializer_class = UploadFileSerializer
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_fields = ('file_name',)  # 前台传值进行匹配搜索
+    search_fields = ('file_name',)
+    ordering_fields = ('file_name',)
+    permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
+
+    def uploadfile(self, requrest, file):
+        pass
