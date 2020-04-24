@@ -285,6 +285,16 @@ class Menu(APIView):
                         },
                         'component': 'maintaintools/manageinfo-file'
                     },
+                    {
+                        'path': 'maintaintools-file',
+                        'name': 'maintaintools-file',
+                        'meta': {
+                            'access': ['maintaintools.view_maintaincommand'],
+                            'icon': 'ios-menu',
+                            'title': '测试专用页面'
+                        },
+                        'component': 'maintaintools/test'
+                    },
                 ]
             },
 
