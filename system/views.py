@@ -286,10 +286,10 @@ class Menu(APIView):
                         'component': 'maintaintools/manageinfo-file'
                     },
                     {
-                        'path': 'maintaintools-file',
-                        'name': 'maintaintools-file',
+                        'path': 'test',
+                        'name': 'test',
                         'meta': {
-                            'access': ['maintaintools.view_maintaincommand'],
+                            'access': ['maintaintools.view_uploaddownfileinfo'],
                             'icon': 'ios-menu',
                             'title': '测试专用页面'
                         },
