@@ -207,7 +207,7 @@ class Menu(APIView):
                 "name": 'monitoring',
                 "meta": {
                     "icon": 'ios-cloud',
-                    "title": 'sql监控'
+                    "title": 'SQL监控'
                 },
                 "component": 'Main',
                 "children": [

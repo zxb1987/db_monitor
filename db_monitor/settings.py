@@ -103,11 +103,11 @@ AUTHENTICATION_BACKENDS = ('system.views.CustomBackend',)  ## 重新登录验证
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
+        'HOST': '114.116.16.6',
         'PORT': '3306',
-        'NAME': 'db_monitor',
+        'NAME': 'db_monitor_dev',
         'USER': 'root',
-        'PASSWORD': 'root123',
+        'PASSWORD': 'jxnet_123qwe',
     }
 }
 
@@ -283,4 +283,11 @@ SWAGGER_SETTINGS = {
 # 数据采集日志
 CHECK_LOG_DIR = os.path.join(BASE_DIR, 'logs')
 
-
+# send email
+IS_SEND_EMAIL = 0
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '215957956@qq.com'
+EMAIL_HOST_PASSWORD = 'tfcihxfbqjhebgff'
+EMAIL_TO_USER = ['215957956@qq.com','247007485@qq.com']
