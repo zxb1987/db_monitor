@@ -36,8 +36,6 @@ class UserInfo(APIView):
             'avatar': 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
         }
         return HttpResponse(json.dumps(result))
-
-
 class UserLogout(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
