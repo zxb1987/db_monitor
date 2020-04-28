@@ -81,6 +81,15 @@ class ApiUploadDownFileList(generics.ListCreateAPIView):
     search_fields = ('file_name',)
     ordering_fields = ('file_name',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
-
-    def uploadfile(self, requrest, file):
-        pass
+    print('12333333333333')
+    def uploadfile(self, request, file):
+        print('5555555555555555555555')
+        hostval=json.loads(request.body)
+        print(hostval)
+        print(file)
+        if request.method == 'POST' and request.FILES.get(file):
+            from django.core.files.storage import FileSystemStorage
+            myfile = request.FILES[file]
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            print(filename)
