@@ -25,7 +25,7 @@ class SshExecCommand(models.Model):
     user = models.CharField("主机用户名", max_length=32)
     password = models.CharField("主机用户密码", max_length=255)
     sshport = models.IntegerField("主机ssh端口号", default=22)
-    ssh_cmd = models.CharField('执行的命令', max_length=200, blank=True)
+    ssh_cmd = models.CharField('执行的命令', max_length=200)
     execresult = models.TextField("执行结果", max_length=5000, blank=True, null=True)
     createtime_ssh = models.DateTimeField("执行时间", default=timezone.now, blank=True, null=True)
 
@@ -42,7 +42,8 @@ class UploadDownFileInfo(models.Model):
     file_name = models.CharField('文件名', max_length=500)
     file_size = models.DecimalField('文件大小', max_digits=10, decimal_places=0)
     file_path = models.CharField('文件传输路径', max_length=500)
-    file_type = models.IntegerField('文件传输类型',default=1)  # 1上传 0下载
+    file_host = models.CharField('文件上传服务器地址', max_length=32)
+    file_type = models.IntegerField('文件传输类型', default=1)  # 1上传 0下载2
     upload_time = models.DateTimeField('传输时间', default=timezone.now, blank=True, null=True)
     remarks = models.CharField('备注', max_length=500, blank=True, null=True)
 
