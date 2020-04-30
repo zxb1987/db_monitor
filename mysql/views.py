@@ -1,16 +1,14 @@
 import cx_Oracle
 import paramiko
-import psutil
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-# from mysql.connector import connection
 import json
 import numpy as np
-# import pandas as pd
-from django.db import connection
 import pymysql.cursors
+from django.views import View
 
-from .models import *
+from assets.models import MysqlList
 from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import filters
@@ -70,46 +68,96 @@ class ApiMysqlSlowquery(generics.ListCreateAPIView):
     permission_classes = (permissions.DjangoModelPermissions,)
 
 
-def Mysql_Excute(request):
-    if request.method == 'GET':
-        return HttpResponse('{"status":"0","message":"后台判断返回失败!!","result":"null"}')
-    elif request.method == 'POST':
-        req = str(request.body, 'utf-8')
-        print("前端的值：" + req)
-        try:
-            cursor = connection.cursor()
-            cursor.execute(req)
-            # cursor.commit()
-            row = cursor.fetchall()
-            # print(row)
-            index = cursor.description
-            # print(index)
-            # 获取每条数据的ID
-            # row_id = [x[0] for x in row]
-            # print(row_id)
-            # 获取列名
-            column_list = {}
-            for i in range(len(index) - 1):
-                column_list[index[i][0]] = index[i]
-            df = np.array(row)
-            # print(column_list)
-            data = []
-            for res in df:
-                data.append(dict(zip(column_list, list(res))))
-            print(data)
-            return JsonResponse(data, safe=False)
-        except Exception as e:
-            print(e)
-            return HttpResponse('{"status":"0","message":"查询失败!!","result":"null"}')
-    # 方式一
-    # return HttpResponse(json.dumps(data),content_type="application/json")
-    # 方式2
-    # return JsonResponse(data,safe=False)
+class MysqlExcuteQuery(View):
+    def Mysql_Excute(request):
+        if request.method == 'GET':
+            return HttpResponse('{"status":"0","message":"后台判断返回失败!!","result":"null"}')
+        elif request.method == 'POST':
+            # req = str(request.body, 'utf-8')
+            req = json.loads(request.body)
+            print(req)
+            resultssqlsr = []
+            resultssrdb = []
+            for value in req.values():
+                resultssqlsr.append(value)
+            sql = resultssqlsr[0]
+            # print(sql)
+            for servervalue in resultssqlsr[1][0].values():
+                resultssrdb.append(servervalue)
+            db = resultssrdb[1]
+            adress_server = []
+            for msg in resultssrdb[0]:
+                for ip_msg in msg.values():
+                    adress_server.append(ip_msg)
+            # print(adress_server[0])
+            # 获取服务器mysql信息，从该项目数据库获取
+            queryset = MysqlList.objects.all()
+            for e in queryset:
+                if e.host == adress_server[0]:
+                    db_user = e.db_user
+                    db_password = e.db_password
+            try:
+                conn = pymysql.connect(host=adress_server[0], user=db_user, password=db_password, db=db)
+                print(conn)
+                cursor = conn.cursor()
+                # cursor = connection.cursor()
+                cursor.execute(sql)
+                # cursor.commit()
+                row = cursor.fetchall()
+                # print(row)
+                index = cursor.description
+                # print(index)
+                # 获取每条数据的ID
+                # row_id = [x[0] for x in row]
+                # print(row_id)
+                # 获取列名
+                column_list = {}
+                for i in range(len(index) - 1):
+                    column_list[index[i][0]] = index[i]
+                df = np.array(row)
+                # print(column_list)
+                data = []
+                for res in df:
+                    data.append(dict(zip(column_list, list(res))))
+                # print(data)
+                # print(len(data))
+                # for i in enumerate(data):
+                #     print(i)
+
+                # data = json.dumps(data)
+                # print(data)
+                paginator = Paginator(data, 10)
+                print(paginator)
+                page = request.POST.get('page', 0)
+                print(page)
+                try:
+                    products = paginator.page(page)
+                    print(products)
+                except PageNotAnInteger:
+                    # If page is not an integer, deliver first page.
+                    products = paginator.page(10)
+                    print(products)
+                except EmptyPage:
+                    # If page is out of range (e.g. 9999), deliver last page of results.
+                    products = paginator.page(paginator.num_pages)
+                    print(products)
+                # json_data = serialize("json", products)
+                # print(json_data)
+
+                cursor.close()
+                conn.close()
+                return JsonResponse(data, safe=False)
+            except Exception as e:
+                print(e)
+                return HttpResponse('{"status":"0","message":"查询失败!!","result":"null"}')
+        # 方式一
+        # return HttpResponse(json.dumps(data),content_type="application/json")
+
 
 def logintoserver(request):
     # req = str(request.body, 'utf-8')
     req = json.loads(request.body)
-    print(req)
+    # print(req)
     allval = []
     text_commd = ''
     try:
@@ -120,7 +168,14 @@ def logintoserver(request):
             sshport = val.get('sshport')
             user = val.get('user')
             password = val.get('password')
-            # tags = val.get('tags')
+
+            # ping
+            # response = os.system("ping " + host)
+            # if response == 0:
+            #     print(host, 'is up!')
+            # else:
+            #     return HttpResponse('{"status":"0","message":"失败!!","result":"null"}')
+
             # 实例化SSHClient
             client = paramiko.SSHClient()
             # 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接
@@ -129,28 +184,28 @@ def logintoserver(request):
             client.connect(hostname=host, port=sshport, username=user, password=password)
             # 打开一个Channel并执行命令
             # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值，get_pty=True 从服务器请求一个伪终端(默认' ' False ' ')。见“.Channel.get_pty”
-            #ps auxww|grep mysqld|grep -v root|grep -v grep
+            # ps auxww|grep mysqld|grep -v root|grep -v grep
             stdin, stdout, stderr = client.exec_command('ps -ef | grep mysql', get_pty=True)
             res, err = stdout.read().decode('utf-8'), stderr.read().decode('utf-8')
-            print(res)
+            # print(res)
 
             # 获取所有pid
             # pids = psutil.pids()
             # print(pids)
 
-            #mysql登录
+            # mysql登录
             try:
-                conn = pymysql.connect(host=host,user='root',password='root')
+                conn = pymysql.connect(host=host, user='root', password='root')
                 print(conn)
                 cursor = conn.cursor()
-                #获取改服务器下的所有数据库名
+                # 获取改服务器下的所有数据库名
                 cursor.execute('show databases')
                 result = cursor.fetchall()
                 # print(result)
 
-                #进入数据库，获取所有表
-                allbase=[]
-                tabs=[]
+                # 进入数据库，获取所有表
+                allbase = []
+                tabs = []
                 for base in result:
                     for i in base:
                         allbase.append(i)
@@ -161,7 +216,7 @@ def logintoserver(request):
                     cursor.execute(connect_sql)
                     cursor.execute('show tables')
                     tables = cursor.fetchall()  # 获得表名，返回数组
-                    dictdata["base"] = db
+                    dictdata["basedb"] = db
                     datamsg = []
                     for tb in tables:
                         for tbs in tb:
@@ -172,9 +227,9 @@ def logintoserver(request):
                 cursor.close()
                 conn.close()
                 client.close()
-                return HttpResponse(json.dumps(tabs),content_type="application/json",)
+                return HttpResponse(json.dumps(tabs), content_type="application/json")
             except Exception as e:
-                return HttpResponse('{"status":"0","message":"数据库连接失败!!","result":"null"}')
+                return HttpResponse('{"status":"00","message":"数据库登录失败!!","result":"null"}')
     except Exception as e:
         print(e)
         return HttpResponse('{"status":"0","message":"服务器登录失败!!","result":"null"}')
