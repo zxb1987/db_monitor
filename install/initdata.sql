@@ -38,3 +38,5 @@ INSERT INTO `django_celery_beat_intervalschedule` VALUES ('1', '10', 'minutes');
 
 INSERT INTO `django_celery_beat_periodictask` VALUES ('3', 'maincheck', 'system.tasks.main_check', '[]', '{}', null, null, null, null, '1', now(), '0', now(), '', null, '1', null, '0', null, null, '{}', null);
 
+
+SET @@global.sql_mode= '';

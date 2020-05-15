@@ -103,11 +103,11 @@ AUTHENTICATION_BACKENDS = ('system.views.CustomBackend',)  ## 重新登录验证
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '114.116.16.6',
+        'HOST': '192.168.1.25',
         'PORT': '3306',
         'NAME': 'db_monitor_dev',
         'USER': 'root',
-        'PASSWORD': 'jxnet_123qwe',
+        'PASSWORD': 'root',
     }
 }
 
@@ -291,3 +291,11 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = '215957956@qq.com'
 EMAIL_HOST_PASSWORD = 'tfcihxfbqjhebgff'
 EMAIL_TO_USER = ['215957956@qq.com','247007485@qq.com']
+
+
+# 配置上传文件目录
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+

@@ -43,6 +43,8 @@ def check_linux(tags,linux_params):
         insert_data_values = {**locals(), **hostinfo, **cpuinfo, **memtotal, **ipinfo, **load, **cpustat, **memstat,
                               **vmstat, **tcpstat, **procstat}
 
+        print("cpu_speed:")
+
         insert_data_sql = "insert into linux_stat(tags,host,port,hostname,ipinfo,linux_version,updays,kernel,frame,cpu_mode,cpu_cache,processor,cpu_speed," \
                           "recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,memtotal,mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb," \
                           "swap_used,swap_free,swapin,swapout,pgin,pgout,pgfault,pgmjfault,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,iops,read_mb,write_mb," \
@@ -67,8 +69,7 @@ def check_linux(tags,linux_params):
 
             insert_data_sql = '''insert into linux_disk(tags,host,dev,total_size,used_size,free_size,used_percent,mount_point,check_time) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)'''
 
-            values = (tags, host, dev, round(float(total_size) / 1024, 2), round(float(used_size) / 1024, 2),
-                      round(float(free_size) / 1024, 2), used_percent, mount_point, now())
+            values = (tags, host, dev, round(float(total_size) / 1024, 2), round(float(used_size) / 1024, 2),round(float(free_size) / 1024, 2), used_percent, mount_point, now())
             mysql_exec(insert_data_sql, values)
         archive_table(tags,'linux_disk')
 

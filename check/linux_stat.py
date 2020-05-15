@@ -7,7 +7,6 @@ import os
 from collections import defaultdict
 from utils.linux_base import LinuxBase
 
-
 stat_file_config = {
     'cpu': '/proc/stat',
     'net': '/proc/net/dev',
@@ -27,6 +26,7 @@ IGNORE_FS = set(['binfmt_misc', 'cgroup', 'debugfs', 'devpts', 'devtmpfs',
 
 import time
 
+
 def format_stat(label, stat_vals):
     ret = {}
     for i in range(len(label)):
@@ -42,7 +42,7 @@ def format_stat(label, stat_vals):
 
 
 class LinuxStat(LinuxBase):
-    def __init__(self,params,conn):
+    def __init__(self, params, conn):
         super().__init__(params)
         self.params = params
         self.conn = conn
@@ -61,7 +61,7 @@ class LinuxStat(LinuxBase):
         # init net data
         net_nics = self.get_net_nics()
         for nic in net_nics:
-            self.old_stat['net_' + nic] = (0,0)
+            self.old_stat['net_' + nic] = (0, 0)
         # init block disk data
         self.block_devices = self.get_block_devices()
         for disk in self.block_devices:
@@ -77,24 +77,24 @@ class LinuxStat(LinuxBase):
     def get_host_info(self):
         # get_hostname mysql50
         command = 'hostname'
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         hostname = res.readlines()[0]
         # get ostype,version,frame Linux 2.6.32-431.el6.x86_64
         command = 'uname -a'
-        res = super().exec_command(command,self.conn)
-        res =  res.readlines()[0]
+        res = super().exec_command(command, self.conn)
+        res = res.readlines()[0]
         ostype = res.split(' ')[0]
         kernel = res.split(' ')[2]
         frame = res.split(' ')[11]
         # linux version
         linux_version = ''
         command = 'lsb_release -a'
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         # up days
         uptime = self.get_uptime()
         up_days = round(float(uptime) / 60 / 60 / 24, 2)
 
-        for each in  res.readlines():
+        for each in res.readlines():
             if each.startswith('Description'):
                 linux_version = each.split(':')[1].strip()
 
@@ -103,8 +103,8 @@ class LinuxStat(LinuxBase):
             'ostype': ostype,
             'kernel': kernel,
             'frame': frame,
-            'linux_version':linux_version,
-            'updays':up_days
+            'linux_version': linux_version,
+            'updays': up_days
         }
 
     def get_cpu_info(self):
@@ -116,7 +116,7 @@ class LinuxStat(LinuxBase):
         cpu_cores = 0
 
         command = 'cat /proc/cpuinfo'
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         res = res.readlines()
 
         for line in res:
@@ -146,7 +146,6 @@ class LinuxStat(LinuxBase):
         speeds = []
         for speed, num in counter_cpu_speed.items():
             speeds.append('%dx%s' % (num, speed))
-
         cpu_speed = ", ".join(speeds)
 
         models = []
@@ -169,13 +168,13 @@ class LinuxStat(LinuxBase):
             'cpu_speed': cpu_speed,
             'cpu_mode': cpu_mode,
             'cpu_cache': cpu_cache,
-            'virtual':virtual
+            'virtual': virtual
         }
 
     def get_memtotal(self):
         command = 'cat /proc/meminfo'
-        res = super().exec_command(command,self.conn)
-        res =  res.readlines()
+        res = super().exec_command(command, self.conn)
+        res = res.readlines()
         memtotal = 0
         for line in res:
             if line.startswith('MemTotal'):
@@ -188,22 +187,21 @@ class LinuxStat(LinuxBase):
     def get_host_ip(self):
         ip_list = []
         command = 'ifconfig'
-        res = super().exec_command(command,self.conn)
-        res =  res.readlines()
+        res = super().exec_command(command, self.conn)
+        res = res.readlines()
         for line in res:
             if line.strip().startswith('inet') and not line.strip().startswith('inet6'):
-                ip_addr =  line.strip().split(' ')[1]
+                ip_addr = line.strip().split(' ')[1]
                 if ip_addr.startswith('addr'):
                     ip = ip_addr.split(':')[1]
                 else:
                     ip = ip_addr
                 if ip != '127.0.0.1' and ip.startswith(''):
                     ip_list.append(ip)
-        ipinfo =  ','.join(ip_list)
+        ipinfo = ','.join(ip_list)
         return {
-            'ipinfo':ipinfo
+            'ipinfo': ipinfo
         }
-
 
     def get_linux_stat(self):
         curr_time = time.time()
@@ -212,7 +210,7 @@ class LinuxStat(LinuxBase):
         else:
             elapsed = curr_time - self.last_time
 
-        #get all status
+        # get all status
         linux_stat = {}
 
         # get hostconf
@@ -236,9 +234,8 @@ class LinuxStat(LinuxBase):
         self.loop_cnt += 1
         return linux_stat
 
-
     def get_cpu_stat(self):
-        #usr, sys, idle, iowait, steal
+        # usr, sys, idle, iowait, steal
         stat_name = 'cpu'
         for l in self.get_stat(stat_name):
             if l[0] == 'cpu' and len(l) >= 9:
@@ -250,7 +247,7 @@ class LinuxStat(LinuxBase):
 
         delta = (sum(stat_curr) - sum(stat_old)) * 1.0
         if delta > 0:
-            self.stat[stat_name] = tuple(100.0 * (stat_curr[i] - stat_old[i])/delta for i in range(5))
+            self.stat[stat_name] = tuple(100.0 * (stat_curr[i] - stat_old[i]) / delta for i in range(5))
         else:
             self.stat[stat_name] = tuple(0 for _ in range(5))
 
@@ -259,10 +256,9 @@ class LinuxStat(LinuxBase):
         label = ('cpu_user', 'cpu_sys', 'cpu_idle', 'cpu_iowait')
         return format_stat(label, self.stat[stat_name])
 
-
     def get_vm_stat(self, elapsed):
         stat_name = 'vm'
-        stats = {'pgpgin':0, 'pgpgout':1, 'pswpin':2, 'pswpout':3, 'pgfault':4, 'pgmjfault':5 }
+        stats = {'pgpgin': 0, 'pgpgout': 1, 'pswpin': 2, 'pswpout': 3, 'pgfault': 4, 'pgmjfault': 5}
         vm_stat = [0 for _ in range(6)]
         for l in self.get_stat(stat_name):
             if l[0] in stats:
@@ -270,7 +266,7 @@ class LinuxStat(LinuxBase):
 
         stat_old = self.old_stat[stat_name]
 
-        self.stat[stat_name] = tuple((vm_stat[i] - stat_old[i])/elapsed for i in range(len(vm_stat)))
+        self.stat[stat_name] = tuple((vm_stat[i] - stat_old[i]) / elapsed for i in range(len(vm_stat)))
         self.old_stat[stat_name] = vm_stat
 
         label = ('pgin', 'pgout', 'swapin', 'swapout', 'pgfault', 'pgmjfault')
@@ -279,32 +275,32 @@ class LinuxStat(LinuxBase):
     def get_mem_stat(self):
         stat_name = 'mem'
         stats = {
-            'MemTotal':0,
-            'MemFree':1,
-            'Buffers':2,
-            'Cached':3,
-            'SReclaimable':4,
-            'Shmem':5,
-            'SwapTotal':6,
-            'SwapFree':7}
-        #self.val['MemUsed'] = self.val['MemTotal'] - self.val['MemFree'] - self.val['Buffers'] - self.val['Cached'] - self.val['SReclaimable'] + self.val['Shmem']
+            'MemTotal': 0,
+            'MemFree': 1,
+            'Buffers': 2,
+            'Cached': 3,
+            'SReclaimable': 4,
+            'Shmem': 5,
+            'SwapTotal': 6,
+            'SwapFree': 7}
+        # self.val['MemUsed'] = self.val['MemTotal'] - self.val['MemFree'] - self.val['Buffers'] - self.val['Cached'] - self.val['SReclaimable'] + self.val['Shmem']
 
         mem_stat = [0 for _ in range(8)]
         for l in self.get_stat(stat_name, ':'):
             if l[0] in stats:
-                mem_stat[stats[l[0]]] = int(l[1])/1024
+                mem_stat[stats[l[0]]] = int(l[1]) / 1024
 
         mem_used = mem_stat[0] - mem_stat[1] - mem_stat[2] - mem_stat[3] - mem_stat[4] + mem_stat[5]
         swap_used = mem_stat[6] - mem_stat[7]
 
-        #used, free, buff, cache, swap used, swap free
+        # used, free, buff, cache, swap used, swap free
         self.stat[stat_name] = (mem_used, mem_stat[1], mem_stat[2], mem_stat[3], swap_used, mem_stat[7])
-        label = ('mem_used_mb', 'mem_free', 'mem_buffer', 'mem_cache','swap_used','swap_free')
+        label = ('mem_used_mb', 'mem_free', 'mem_buffer', 'mem_cache', 'swap_used', 'swap_free')
         return format_stat(label, self.stat[stat_name])
 
     def get_proc_stat(self, elapsed):
         stat_name = 'sys'
-        stats = {'processes':0, 'procs_running':1, 'procs_blocked':2, 'intr':3, 'ctxt':4, 'softirq':5 }
+        stats = {'processes': 0, 'procs_running': 1, 'procs_blocked': 2, 'intr': 3, 'ctxt': 4, 'softirq': 5}
 
         self.curr_stat[stat_name] = [0 for _ in range(6)]
         for l in self.get_stat(stat_name):
@@ -314,24 +310,30 @@ class LinuxStat(LinuxBase):
         val2 = self.curr_stat[stat_name]
         val1 = self.old_stat[stat_name]
 
-        #proc_new, proc_running, proc_block, intrupts, ctx switchs, softirq
-        self.stat[stat_name] = (1.0*(val2[0]-val1[0])/elapsed, val2[1], val2[2],
-                           1.0*(val2[3]-val1[3])/elapsed, 1.0*(val2[4]-val1[4])/elapsed, 1.0*(val2[5]-val1[5])/elapsed)
+        # proc_new, proc_running, proc_block, intrupts, ctx switchs, softirq
+        self.stat[stat_name] = (1.0 * (val2[0] - val1[0]) / elapsed, val2[1], val2[2],
+                                1.0 * (val2[3] - val1[3]) / elapsed, 1.0 * (val2[4] - val1[4]) / elapsed,
+                                1.0 * (val2[5] - val1[5]) / elapsed)
 
         self.old_stat[stat_name] = val2
         label = ('proc_new', 'proc_running', 'proc_block', 'intr', 'ctx', 'softirq')
         return format_stat(label, self.stat[stat_name])
 
     def get_tcp_conn_stat(self):
-        conn_listen, conn_esta, conn_syn, conn_wait, conn_close = 0,0,0,0,0
+        conn_listen, conn_esta, conn_syn, conn_wait, conn_close = 0, 0, 0, 0, 0
         for l in self.get_tcp_stat():
-            if l[3] in set(['0A']): conn_listen += 1
-            elif l[3] in set(['01']): conn_esta += 1
-            elif l[3] in set(['02', '03', '09']): conn_syn += 1
-            elif l[3] in set(['06']): conn_wait += 1
-            elif l[3] in set(['04', '05', '07', '08', '0B']): conn_close += 1
+            if l[3] in set(['0A']):
+                conn_listen += 1
+            elif l[3] in set(['01']):
+                conn_esta += 1
+            elif l[3] in set(['02', '03', '09']):
+                conn_syn += 1
+            elif l[3] in set(['06']):
+                conn_wait += 1
+            elif l[3] in set(['04', '05', '07', '08', '0B']):
+                conn_close += 1
 
-        self.stat['tcp_conns'] = (conn_listen,conn_esta, conn_syn, conn_wait, conn_close)
+        self.stat['tcp_conns'] = (conn_listen, conn_esta, conn_syn, conn_wait, conn_close)
         label = ('tcp_listen', 'tcp_connected', 'tcp_syn', 'tcp_timewait', 'tcp_close')
         return format_stat(label, self.stat['tcp_conns'])
 
@@ -360,7 +362,7 @@ class LinuxStat(LinuxBase):
 
     def get_net_nics(self):
         command = 'cat /proc/net/dev'
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         fd = res
         nic_filter = re.compile("^(lo|face|docker\d+)$")
         ret = []
@@ -377,7 +379,7 @@ class LinuxStat(LinuxBase):
     def get_mounted_dev(self):
         mounted_dev = set()
         command = 'cat /etc/mtab'
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         f = res
         for i in f.readlines():
             # /dev/xvda1 / ext4 rw,errors=remount-ro 0 0
@@ -402,30 +404,29 @@ class LinuxStat(LinuxBase):
         ret = []
         mounted_dev = self.get_mounted_dev()
         command = 'ls -l /sys/block/*'
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         fd = res
         for l in res.readlines():
             dev_name = l.split('/')[-1]
-            dev_name = re.sub(':','',dev_name).strip()
+            dev_name = re.sub(':', '', dev_name).strip()
             if disk_filter.match(dev_name):
                 continue
             if dev_name in mounted_dev:
                 ret.append(dev_name)
         return ret[:30]
 
-
     def get_net_stat(self, elapsed):
         stat_name = 'net'
         net_nics = self.get_net_nics()
         ret = []
         label = ('recv', 'send')
-        for l in self.get_stat(stat_name,':'):
+        for l in self.get_stat(stat_name, ':'):
             if l[0] in net_nics and len(l) >= 17:
                 stat_nic = '%s_%s' % (stat_name, l[0])
-                #net recv, net send, kb
+                # net recv, net send, kb
                 stat_curr = (int(l[1]), int(l[9]))
                 stat_old = self.old_stat[stat_nic]
-                self.stat[stat_nic] = tuple(1.0*(stat_curr[i] - stat_old[i])/elapsed/1024 for i in range(2))
+                self.stat[stat_nic] = tuple(1.0 * (stat_curr[i] - stat_old[i]) / elapsed / 1024 for i in range(2))
                 self.old_stat[stat_nic] = stat_curr
 
                 netstat = format_stat(label, self.stat[stat_nic])
@@ -497,13 +498,13 @@ class LinuxStat(LinuxBase):
                 self.stat[disk] = (rd_s, wr_s, in_prg, ttime, stime, busy / num_disk, rd_m_s, wr_m_s)
             else:
                 label = ('rd_s', 'rd_avgkb', 'rd_m_s', 'rd_mrg_s', 'rd_cnc', 'rd_rt',
-                         'wr_s','wr_avgkb','wr_m_s','wr_mrg_s','wr_cnc','wr_rt',
-                         'busy', 'in_prg','io_s','qtime', 'stime')
+                         'wr_s', 'wr_avgkb', 'wr_m_s', 'wr_mrg_s', 'wr_cnc', 'wr_rt',
+                         'busy', 'in_prg', 'io_s', 'qtime', 'stime')
 
                 # per disk io stat
                 self.stat[disk] = (rd_s, rd_avgkb, rd_m_s, rd_mrg_s, rd_cnc, rd_rt,
-                              wr_s, wr_avgkb, wr_m_s, wr_mrg_s, wr_cnc, wr_rt,
-                              busy, in_prg, io_s, qtime, stime)
+                                   wr_s, wr_avgkb, wr_m_s, wr_mrg_s, wr_cnc, wr_rt,
+                                   busy, in_prg, io_s, qtime, stime)
 
                 diskstat = format_stat(label, self.stat[disk])
                 diskstat['dev'] = disk[3:]
@@ -511,11 +512,10 @@ class LinuxStat(LinuxBase):
             self.old_stat[disk] = self.curr_stat[disk]
         return ret
 
-
     def get_stat(self, stat_name, replace=None):
         stat_file = stat_file_config[stat_name]
         command = 'cat ' + stat_file
-        res = super().exec_command(command,self.conn)
+        res = super().exec_command(command, self.conn)
         fd = res
 
         for l in fd.readlines():
@@ -527,13 +527,30 @@ class LinuxStat(LinuxBase):
     def get_diskfree(self):
         ret = []
         command = 'df -k'
-        res = super().exec_command(command,self.conn)
-        disk_list = [line.split() for line in res]
+        res = super().exec_command(command, self.conn)
+        ress_bak = res
+        disk_list = []
+        content=''
+        for lines in ress_bak:
+            if len(lines.split()) == 7:
+                continue
+            elif len(lines.split()) == 1:
+                content = lines
+            elif len(lines.split()) == 6:
+                disk_list.append(lines.split())
+            elif len(lines.split()) == 5:
+                a = content + lines
+                a = a.replace('\n', ' ')
+                disk_list.append(a.split())
+        ##disk_list = [line.split() for line in res]
         print("======================================================")
         print(disk_list)
-
+        # [['Filesystem', '1K-blocks', 'Used', 'Available', 'Use%', 'Mounted', 'on'],#or each[0] in "tmpfs"
         for each in disk_list:
-            if  each[0] == '文件系统' or each[0] == '1K - 块' or each[0] == '已用' or each[0] == '可用' or each[0] == '已用 %' or each[0] == '挂载点' or each[0] == 'Filesystem' or each[0] == 'none' or each[0] == 'udev' or each[0] in "tmpfs":
+            if each[0] == '文件系统' or each[0] == '1K - 块' or each[0] == '已用' or each[0] == '可用' or each[0] == '已用 %' or \
+                    each[0] == '挂载点' or each[0] == '1K-blocks' or each[0] == 'Used' or each[0] == 'Available' or each[
+                0] == 'Use%' or each[0] == 'Mounted' or each[0] == 'on' or each[0] == 'Filesystem' or each[
+                0] == 'none' or each[0] == 'udev' :
                 continue
             else:
                 ret.append(each)
@@ -541,7 +558,6 @@ class LinuxStat(LinuxBase):
 
 
 if __name__ == '__main__':
-
     linux_params = {
         'hostname': '114.116.16.6',
         'port': 22,
@@ -550,7 +566,6 @@ if __name__ == '__main__':
     }
     linux_conn, _ = LinuxBase(linux_params).connection()
 
-    linuxstat = LinuxStat(linux_params,linux_conn)
+    linuxstat = LinuxStat(linux_params, linux_conn)
 
     print(linuxstat.get_diskfree())
-

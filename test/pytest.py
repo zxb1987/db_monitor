@@ -3,26 +3,23 @@
 # 读取excel数据
 # 小罗的需求，取第二行以下的数据，然后取每行前13列的数据
 #import xlrd
-from pandas import Series,DataFrame
+# !/usr/bin/python3
 
+import pymysql
 
-import pandas as pd
-import numpy as np
+# 打开数据库连接
+db = pymysql.connect("192.168.1.25", "root", "root", "mypythontest")
 
-orders = pd.read_excel("D:/info.xlsx")
-#orders.groupby(['填报人','金额']).sum()
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
 
-groups=orders.groupby(['填报人'])
+# 使用 execute()  方法执行 SQL 查询
+cursor.execute("SELECT VERSION()")
 
-print(orders['填报人'])
+# 使用 fetchone() 方法获取单条数据.
+data = cursor.fetchone()
 
-s=groups['金额'].sum()
-c=groups['金额'].sum()
+print("Database version : %s " % data)
 
-pt2=pd.DataFrame({'金额':s,'总金额':c})
-
-# 定义ID为索引
-
-# 生成excel文件output.xlsx，并保存到对应的位置。注意如果直接放到C盘可能会有问题！
-pt2.to_excel('D:/按人员费用分类.xlsx')
-
+# 关闭数据库连接
+db.close()

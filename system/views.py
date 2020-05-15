@@ -358,6 +358,36 @@ class Menu(APIView):
                     }
                 ]
             },
+            {
+                "path": '/files',
+                "name": 'files',
+                "meta": {
+                    "icon": 'ios-cloud',
+                    "title": '文件管理'
+                },
+                "component": 'Main',
+                "children": [
+                    {
+                        'path': 'business-files-upload',
+                        'name': 'business-files-upload',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '文件上传'
+                        },
+                        'component': 'files/upload'
+                    },{
+                        'path': 'files-download',
+                        'name': 'files-download',
+                        'meta': {
+                            'access': ['assets.view_mysqllist'],
+                            'icon': 'ios-menu',
+                            'title': '文件下载'
+                        },
+                        'component': 'files/download'
+                    }
+                ]
+            },
 
             {
                 "path": '/user',

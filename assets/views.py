@@ -6,12 +6,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework.views import APIView
 from django.views.generic import View
 from utils.utils import *
 from utils.parser import Argument, JsonParser
 from .serializers import *
 import json
-
+from datetime import datetime
+import os
 
 # Ecs Api           drf 中文文档   http://drf.jiuyou.info/#/drf/requests
 class ApiOracleList(generics.ListCreateAPIView):
@@ -111,14 +113,35 @@ class AppView(View):
     #     return json_response("{'name:'post}")
 
     def post(self, request):
-        print(request.body)
-        receive_data = simplejson.loads(request.body)
-        print(receive_data)
+        print('========requestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequestrequest==========')
+        image = request.FILES.get('image')
+        image_name = datetime.now().strftime('%Y%m%d%H%M%S%f') + image.name
+        f = open(os.path.join("templates", image_name), 'wb')
+        #以二进制流写入文件
+        for i in image.chunks():
+            f.write(i)
+        f.close()
 
-        receive_data = json.loads(request.body.decode())
 
-        print(receive_data["user"]["name"])
-        print(receive_data["password"])
+
+
+
+
+
+
+
+
+
+
+
+        # print(request.body)
+        # receive_data = simplejson.loads(request.body)
+        # print(receive_data)
+        #
+        # receive_data = json.loads(request.body.decode())
+        #
+        # print(receive_data["user"]["name"])
+        # print(receive_data["password"])
         return HttpResponse('OK')
 
     def put(self, request):
