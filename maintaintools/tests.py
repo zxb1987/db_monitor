@@ -1,45 +1,106 @@
-import json
-
-import paramiko
 from django.http import HttpResponse
 from django.views import View
 
-from maintaintools.models import MaintainCommand
+#
+"""文件上传"""
 
 
-class getpaerm(View):
-    def post(self, request, r_id):
-        print(r_id)
-        queryset = MaintainCommand.objects.get(id=r_id)
-        ssh_cmd = queryset.usecommand + ' ' + queryset.commandparam
-        print(ssh_cmd)
-        val = json.loads(request.body)
-        allval = []
-        host = ''
-        sshport = 22
-        user = ''
-        password = ''
-        for i in val:
-            allval.append(i)
-        for val in allval:
-            host = val.get('host')
-            sshport = val.get('sshport')
-            user = val.get('user')
-            password = val.get('password')
+class FileUploadView(View):
+    '''
+    上传文件接口
+    '''
 
-        # 实例化SSHClient
-        client = paramiko.SSHClient()
-        # 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        # 连接SSH服务端，以用户名和密码进行认证
-        client.connect(hostname=host, port=sshport, username=user, password=password)
-        # 打开一个Channel并执行命令
-        stdin, stdout, stderr = client.exec_command(ssh_cmd)  # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值
-        # 打印执行结果
-        text_commd = stdout.read().decode('utf-8'), stderr.read().decode('utf-8')
-        # 关闭SSHClient
-        client.close()
+    def post(self, request):
+        """
+            返回上传的文件地址
+        """
+        print(self)
+        print(request)
+        print(request.POST)
+        try:
+            files = request.FILES.getlist('file', None)  # 文件
+            print('1111111111111')
+            print(files)
+            data = request.POST.get('data', None)  # 携带参数
+            print('22222222222')
+            print(data)
+            # if (data[0] == '' & data == None):
+            #     return HttpResponse({"code": 400, "msg": u"上传失败，请选择需要上传的服务器"})
 
-        return HttpResponse(text_commd)
+            # from db_monitor import settings
+            # if filemkdir not in settings.DATA_FILENAAME or not files:
+            #     return HttpResponse({"code":400, "msg":u"上传参数无效"})
+            # if filemkdir == 'attachment':
+            #     self.IMG_result = self.attachment_uploading(files)
+            # else:
+            #     self.IMG_result = self.file_upload(files=files,mk=filemkdir)
+            # return HttpResponse(self.IMG_result)
+            return HttpResponse('999999999999999999999999999')
+        except Exception as e:
+            print(e)
+            return HttpResponse({"code": 400, "msg": u"上传失败"})
+# class GetPaerml(View):
+# def filepost(self):
+#     print(self)
+#     print('22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222')
+#     print(self.method)
+#     file_all=self.request.files.get('file',None)
+#     print(file_all)
 
 
+# if file and allowed_file(file.filename):
+#     filename = now + '_' + str(current_user) + '_' + file.filename
+#     filename = secure_filename(filename)
+#     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#     file_uploaded = True
+
+# print(type(request))
+# if self.method == 'POST':
+#     print('111112222222222222')
+#     myfile = self.FILES.get('File')
+#     print(myfile)
+#     if myfile is None:
+#         print('上传文件失败')
+#         return HttpResponse('上传文件失败')
+#     else:
+#
+#         fs = FileSystemStorage()
+#         filename = fs.save(myfile.name, myfile)
+#         print(myfile)
+#         print('2222222222222222222222')
+#         print(filename)
+#         return HttpResponse('123456')
+# return HttpResponse('222222222222222222')
+#
+# def geifile(request):
+#     print(type(request))
+#     print('11111111111111111111')
+#     # if request.method=='POST':
+#     #     File = request.FILES('upload')
+#     #     print(File)
+#     # filename=None
+#     # if request.method == 'POST' and request.FILES.get('file'):
+#     #     from django.core.files.storage import FileSystemStorage
+#     #     myfile = request.FILES['file']
+#     #     fs = FileSystemStorage()
+#     #     filename = fs.save(myfile.name, myfile)
+#     #     print(filename)
+#     if request.method == 'POST':
+#         print('111112222222222222')
+#         myfile = request.FILES.get('file')
+#         print(myfile)
+#         if myfile is None:
+#             print('上传文件失败')
+#             return HttpResponse('上传文件失败')
+#         else:
+#
+#             fs = FileSystemStorage()
+#             filename = fs.save(myfile.name, myfile)
+#             print(myfile)
+#             print('2222222222222222222222')
+#             print(filename)
+#             return HttpResponse('123456')
+#
+#     # val = json.loads(request.body)
+#
+#     # return HttpResponse('123456')

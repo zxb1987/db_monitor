@@ -63,7 +63,6 @@ class GetPaerm(View):
             except Exception as e:
                 print(tags, '服务器连接失败！请检查登录的用户名密码是否正确！！')
                 print(e)
-
             # print('数据库保存开始')
             sshalldate = SshExecCommand.objects.create(tags=tags, host=host, sshport=sshport, user=user,
                                                        password=password, ssh_cmd=ssh_cmd, execresult=text_commd)
@@ -82,14 +81,48 @@ class ApiUploadDownFileList(generics.ListCreateAPIView):
     ordering_fields = ('file_name',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
     print('12333333333333')
-    def uploadfile(self, request, file):
-        print('5555555555555555555555')
-        hostval=json.loads(request.body)
-        print(hostval)
-        print(file)
-        if request.method == 'POST' and request.FILES.get(file):
-            from django.core.files.storage import FileSystemStorage
-            myfile = request.FILES[file]
-            fs = FileSystemStorage()
-            filename = fs.save(myfile.name, myfile)
-            print(filename)
+    #
+    # def uploadfile(self, request, file):
+    #     print('5555555555555555555555')
+    #     hostval=json.loads(request.body)
+    #     print(hostval)
+    #     print(file)
+    #     if request.method == 'POST' and request.FILES.get(file):
+    #         from django.core.files.storage import FileSystemStorage
+    #         myfile = request.FILES[file]
+    #         fs = FileSystemStorage()
+    #         filename = fs.save(myfile.name, myfile)
+    #         print(filename)
+
+
+class FileUploadViews(View):
+    '''
+    上传文件接口
+    '''
+
+    def post(self, request):
+        """
+            返回上传的文件地址
+        """
+        print(self)
+        print(request)
+        print(request.POST)
+        try:
+            files = request.FILES.getlist('file', None)  # 文件
+            print('1111111111111')
+            print(files)
+            data = request.POST.get('data', None)  # 携带参数
+            print('22222222222')
+            print(data)
+            # from db_monitor import settings
+            # if filemkdir not in settings.DATA_FILENAAME or not files:
+            #     return HttpResponse({"code":400, "msg":u"上传参数无效"})
+            # if filemkdir == 'attachment':
+            #     self.IMG_result = self.attachment_uploading(files)
+            # else:
+            #     self.IMG_result = self.file_upload(files=files,mk=filemkdir)
+            # return HttpResponse(self.IMG_result)
+            return HttpResponse('999999999999999999999999999')
+        except Exception as e:
+            print(e)
+            return HttpResponse({"code": 400, "msg": u"上传失败"})
