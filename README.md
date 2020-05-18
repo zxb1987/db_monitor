@@ -97,7 +97,7 @@ python manage.py createsuperuser(创建登录用户)
 #### 6. 启动
 python manage.py runserver
 nohup python3 manage.py runserver 0.0.0.0:9998&
-
+nohup python3 manage.py runserver 0.0.0.0:8000&
 celery –A db_monitor worker –l info
 
 celery –A db_monitor beat –l info
@@ -158,6 +158,7 @@ Copyright © 2019 DB monitor
 sed -i 's/\r$//' start.sh 
 杀进程用:
 ps aux | grep python3 |  awk '{print $2}' | xargs kill -9
+ps -aux | grep python3 | awk '{print $2}' | xargs kill
 遇到celery问题
 {
 终端： 

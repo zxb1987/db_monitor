@@ -55,6 +55,7 @@ class LinuxBase(object):
         print(remote_file)
         print(3)
         remote_file.seek(seek)
+        print(4)
         for line in remote_file.read().splitlines():
             if line != '':
                 yield (line,0)

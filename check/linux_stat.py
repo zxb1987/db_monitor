@@ -530,8 +530,13 @@ class LinuxStat(LinuxBase):
         res = super().exec_command(command, self.conn)
         ress_bak = res
         disk_list = []
-        content=''
+        content = ''
+        i = 0
         for lines in ress_bak:
+            if i == 0:
+                i = i + 1
+                continue
+
             if len(lines.split()) == 7:
                 continue
             elif len(lines.split()) == 1:
@@ -547,13 +552,13 @@ class LinuxStat(LinuxBase):
         print(disk_list)
         # [['Filesystem', '1K-blocks', 'Used', 'Available', 'Use%', 'Mounted', 'on'],#or each[0] in "tmpfs"
         for each in disk_list:
-            if each[0] == '文件系统' or each[0] == '1K - 块' or each[0] == '已用' or each[0] == '可用' or each[0] == '已用 %' or \
-                    each[0] == '挂载点' or each[0] == '1K-blocks' or each[0] == 'Used' or each[0] == 'Available' or each[
-                0] == 'Use%' or each[0] == 'Mounted' or each[0] == 'on' or each[0] == 'Filesystem' or each[
-                0] == 'none' or each[0] == 'udev' :
-                continue
-            else:
-                ret.append(each)
+            # if each[0] == '文件系统' or each[0] == '1K - 块' or each[0] == '已用' or each[0] == '可用' or each[0] == '已用 %' or \
+            #         each[0] == '挂载点' or each[0] == '1K-blocks' or each[0] == 'Used' or each[0] == 'Available' or each[
+            #     0] == 'Use%' or each[0] == 'Mounted' or each[0] == 'on' or each[0] == 'Filesystem' or each[
+            #     0] == 'none' or each[0] == 'udev' :
+            #     continue
+            # else:
+            ret.append(each)
         return ret
 
 
