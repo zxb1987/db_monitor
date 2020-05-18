@@ -1,3 +1,5 @@
+import re
+
 import cx_Oracle
 import paramiko
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
@@ -80,78 +82,55 @@ class MysqlExcuteQuery(View):
             resultssrdb = []
             for value in req.values():
                 resultssqlsr.append(value)
-            sql = resultssqlsr[0]
-            # print(sql)
-            for servervalue in resultssqlsr[1][0].values():
-                resultssrdb.append(servervalue)
-            db = resultssrdb[1]
-            adress_server = []
-            for msg in resultssrdb[0]:
-                for ip_msg in msg.values():
-                    adress_server.append(ip_msg)
-            # print(adress_server[0])
-            # 获取服务器mysql信息，从该项目数据库获取
-            queryset = MysqlList.objects.all()
-            for e in queryset:
-                if e.host == adress_server[0]:
-                    db_user = e.db_user
-                    db_password = e.db_password
-            try:
-                conn = pymysql.connect(host=adress_server[0], user=db_user, password=db_password, db=db)
-                print(conn)
-                cursor = conn.cursor()
-                # cursor = connection.cursor()
-                cursor.execute(sql)
-                # cursor.commit()
-                row = cursor.fetchall()
-                # print(row)
-                index = cursor.description
-                # print(index)
-                # 获取每条数据的ID
-                # row_id = [x[0] for x in row]
-                # print(row_id)
-                # 获取列名
-                column_list = {}
-                for i in range(len(index) - 1):
-                    column_list[index[i][0]] = index[i]
-                df = np.array(row)
-                # print(column_list)
-                data = []
-                for res in df:
-                    data.append(dict(zip(column_list, list(res))))
-                # print(data)
-                # print(len(data))
-                # for i in enumerate(data):
-                #     print(i)
-
-                # data = json.dumps(data)
-                # print(data)
-                paginator = Paginator(data, 10)
-                print(paginator)
-                page = request.POST.get('page', 0)
-                print(page)
-                try:
-                    products = paginator.page(page)
-                    print(products)
-                except PageNotAnInteger:
-                    # If page is not an integer, deliver first page.
-                    products = paginator.page(10)
-                    print(products)
-                except EmptyPage:
-                    # If page is out of range (e.g. 9999), deliver last page of results.
-                    products = paginator.page(paginator.num_pages)
-                    print(products)
-                # json_data = serialize("json", products)
-                # print(json_data)
-
-                cursor.close()
-                conn.close()
-                return JsonResponse(data, safe=False)
-            except Exception as e:
-                print(e)
-                return HttpResponse('{"status":"0","message":"查询失败!!","result":"null"}')
-        # 方式一
-        # return HttpResponse(json.dumps(data),content_type="application/json")
+            #切割sql判断是否含有drop,truncate,delete,insert update,create
+            q = re.sub(r"/\*[^*]*\*+(?:[^*/][^*]*\*+)*/", "", resultssqlsr[0])
+            lines = [line for line in q.splitlines() if not re.match("^\s*(--|#)", line)]
+            q = " ".join([re.split("--|#", line)[0] for line in lines])
+            tokens = re.split(r"[\s)(;]+", q)
+            print(tokens)
+            for key_words in tokens:
+                if key_words.lower() in ['truncate','delete','drop','update','insert','create']:
+                    return HttpResponse('{"status":"0","message":"该SQL不被允许执行!!","result":"null"}')
+                else:
+                    sql = resultssqlsr[0]
+                    # print(sql)
+                    for servervalue in resultssqlsr[1][0].values():
+                        resultssrdb.append(servervalue)
+                    db = resultssrdb[1]
+                    adress_server = []
+                    for msg in resultssrdb[0]:
+                        for ip_msg in msg.values():
+                            adress_server.append(ip_msg)
+                    # print(adress_server[0])
+                    # 获取服务器mysql信息，从该项目数据库获取
+                    queryset = MysqlList.objects.all()
+                    for e in queryset:
+                        if e.host == adress_server[0]:
+                            db_user = e.db_user
+                            db_password = e.db_password
+                    try:
+                        conn = pymysql.connect(host=adress_server[0], user=db_user, password=db_password, db=db)
+                        print(conn)
+                        cursor = conn.cursor()
+                        cursor.execute(sql)
+                        # cursor.commit()
+                        row = cursor.fetchall()
+                        index = cursor.description
+                        column_list = {}
+                        for i in range(len(index) - 1):
+                            column_list[index[i][0]] = index[i]
+                        df = np.array(row)
+                        data = []
+                        for res in df:
+                            data.append(dict(zip(column_list, list(res))))
+                        cursor.close()
+                        conn.close()
+                        return JsonResponse(data, safe=False)
+                    except Exception as e:
+                        print(e)
+                        return HttpResponse('{"status":"0","message":"查询失败!!","result":"null"}')
+                # 方式一
+                # return HttpResponse(json.dumps(data),content_type="application/json")
 
 
 def logintoserver(request):
