@@ -1,106 +1,58 @@
-from django.http import HttpResponse
-from django.views import View
+#!/usr/bin/env python
+# coding: utf-8
+import datetime
+import os
 
-#
-"""文件上传"""
+import paramiko
 
-
-class FileUploadView(View):
-    '''
-    上传文件接口
-    '''
-
-    def post(self, request):
-        """
-            返回上传的文件地址
-        """
-        print(self)
-        print(request)
-        print(request.POST)
-        try:
-            files = request.FILES.getlist('file', None)  # 文件
-            print('1111111111111')
-            print(files)
-            data = request.POST.get('data', None)  # 携带参数
-            print('22222222222')
-            print(data)
-            # if (data[0] == '' & data == None):
-            #     return HttpResponse({"code": 400, "msg": u"上传失败，请选择需要上传的服务器"})
-
-            # from db_monitor import settings
-            # if filemkdir not in settings.DATA_FILENAAME or not files:
-            #     return HttpResponse({"code":400, "msg":u"上传参数无效"})
-            # if filemkdir == 'attachment':
-            #     self.IMG_result = self.attachment_uploading(files)
-            # else:
-            #     self.IMG_result = self.file_upload(files=files,mk=filemkdir)
-            # return HttpResponse(self.IMG_result)
-            return HttpResponse('999999999999999999999999999')
-        except Exception as e:
-            print(e)
-            return HttpResponse({"code": 400, "msg": u"上传失败"})
-# class GetPaerml(View):
-# def filepost(self):
-#     print(self)
-#     print('22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222')
-#     print(self.method)
-#     file_all=self.request.files.get('file',None)
-#     print(file_all)
+hostname = '192.168.1.25'
+username = 'root'
+password = 'lecent123'
+port = 22
 
 
-# if file and allowed_file(file.filename):
-#     filename = now + '_' + str(current_user) + '_' + file.filename
-#     filename = secure_filename(filename)
-#     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#     file_uploaded = True
+def upload(local_dir, remote_dir):
+    try:
+        t = paramiko.Transport((hostname, port))
+        t.connect(username=username, password=password)
+        sftp = paramiko.SFTPClient.from_transport(t)
+        print('开始上传文件 %s ' % datetime.datetime.now())
+        for root, dirs, files in os.walk(local_dir):
+            print('[%s][%s][%s]' % (root, dirs, files))
+            for filespath in files:
+                local_file = os.path.join(root, filespath)
+                print(11, '[%s][%s][%s][%s]' % (root, filespath, local_file, local_dir))
+                a = local_file.replace(local_dir, '').replace('\\', '/').lstrip('/')
+                print('01', a, '[%s]' % remote_dir)
+                remote_file = os.path.join(remote_dir, a)
+                print(22, remote_file)
+                try:
+                    sftp.put(local_file, remote_file)
+                except Exception as e:
+                    sftp.mkdir(os.path.split(remote_file)[0])
+                    sftp.put(local_file, remote_file)
+                    print("66 upload %s to remote %s" % (local_file, remote_file))
+            for name in dirs:
+                local_path = os.path.join(root, name)
+                print(0, local_path, local_dir)
+                a = local_path.replace(local_dir, '').replace('\\', '')
+                print(1, a)
+                print(1, remote_dir)
+                remote_path = os.path.join(remote_dir, a)
+                print(33, remote_path)
+                try:
+                    sftp.mkdir(remote_path)
+                    print(44, "mkdir path %s" % remote_path)
+                except Exception as e:
+                    print(55, e)
 
-# print(type(request))
-# if self.method == 'POST':
-#     print('111112222222222222')
-#     myfile = self.FILES.get('File')
-#     print(myfile)
-#     if myfile is None:
-#         print('上传文件失败')
-#         return HttpResponse('上传文件失败')
-#     else:
-#
-#         fs = FileSystemStorage()
-#         filename = fs.save(myfile.name, myfile)
-#         print(myfile)
-#         print('2222222222222222222222')
-#         print(filename)
-#         return HttpResponse('123456')
-# return HttpResponse('222222222222222222')
-#
-# def geifile(request):
-#     print(type(request))
-#     print('11111111111111111111')
-#     # if request.method=='POST':
-#     #     File = request.FILES('upload')
-#     #     print(File)
-#     # filename=None
-#     # if request.method == 'POST' and request.FILES.get('file'):
-#     #     from django.core.files.storage import FileSystemStorage
-#     #     myfile = request.FILES['file']
-#     #     fs = FileSystemStorage()
-#     #     filename = fs.save(myfile.name, myfile)
-#     #     print(filename)
-#     if request.method == 'POST':
-#         print('111112222222222222')
-#         myfile = request.FILES.get('file')
-#         print(myfile)
-#         if myfile is None:
-#             print('上传文件失败')
-#             return HttpResponse('上传文件失败')
-#         else:
-#
-#             fs = FileSystemStorage()
-#             filename = fs.save(myfile.name, myfile)
-#             print(myfile)
-#             print('2222222222222222222222')
-#             print(filename)
-#             return HttpResponse('123456')
-#
-#     # val = json.loads(request.body)
-#
-#     # return HttpResponse('123456')
+        print('77,上传文件成功 %s ' % datetime.datetime.now())
+        t.close()
+    except Exception as e:
+        print(88, e)
+
+
+if __name__ == '__main__':
+    local_dir = r'F:\lecent\sdk\se\linux'
+    remote_dir = '/home/lecentfile/'
+    upload(local_dir, remote_dir)

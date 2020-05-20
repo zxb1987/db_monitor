@@ -40,7 +40,7 @@ class SshExecCommand(models.Model):
 
 class UploadDownFileInfo(models.Model):
     file_name = models.CharField('文件名', max_length=500)
-    file_size = models.DecimalField('文件大小', max_digits=10, decimal_places=0)
+    file_size = models.CharField('文件大小', max_length=10,)
     file_path = models.CharField('文件传输路径', max_length=500)
     file_host = models.CharField('文件上传服务器地址', max_length=32)
     file_type = models.IntegerField('文件传输类型', default=1)  # 1上传 0下载2

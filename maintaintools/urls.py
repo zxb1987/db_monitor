@@ -1,6 +1,6 @@
 from django.urls import path
 
-from maintaintools import tests
+from maintaintools import test
 from maintaintools import views
 
 app_name = "maintaintools"
@@ -11,5 +11,5 @@ urlpatterns = [
     path('sshclient/<int:ssh_id>', views.GetPaerm.as_view()),
     path('api/uploaddownfile-list', views.ApiUploadDownFileList.as_view()),
     path('uploadfile', views.FileUploadViews.as_view()),
-    path('uploadfile/file', tests.FileUploadView.as_view())
+    path('uploadfile/file', test.FileUpload.as_view())
 ]
