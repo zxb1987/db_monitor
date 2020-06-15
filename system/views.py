@@ -283,9 +283,9 @@ class Menu(APIView):
                         },
                         'component': 'maintaintools/manageinfo-file'
                     },
-                    {
-                        'path': 'test',
-                        'name': 'test',
+                    { #  view_uploaddownfileinfo
+                        'path': 'test2',
+                        'name': 'test3',
                         'meta': {
                             'access': ['maintaintools.view_uploaddownfileinfo'],
                             'icon': 'ios-menu',
@@ -293,6 +293,16 @@ class Menu(APIView):
                         },
                         'component': 'maintaintools/test'
                     },
+                    {  # view_portcheck
+                        'path': 'portchecker',
+                        'name': 'portchecker',
+                        'meta': {
+                            'access': ['maintaintools.view_portcheck'],
+                            'icon': 'ios-menu',
+                            'title': '端口/进程检测'
+                        },
+                        'component': 'maintaintools/portchecker'
+                     },
                 ]
             },
 
@@ -358,36 +368,36 @@ class Menu(APIView):
                     }
                 ]
             },
-            {
-                "path": '/files',
-                "name": 'files',
-                "meta": {
-                    "icon": 'ios-cloud',
-                    "title": '文件管理'
-                },
-                "component": 'Main',
-                "children": [
-                    {
-                        'path': 'business-files-upload',
-                        'name': 'business-files-upload',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '文件上传'
-                        },
-                        'component': 'files/upload'
-                    },{
-                        'path': 'files-download',
-                        'name': 'files-download',
-                        'meta': {
-                            'access': ['assets.view_mysqllist'],
-                            'icon': 'ios-menu',
-                            'title': '文件下载'
-                        },
-                        'component': 'files/download'
-                    }
-                ]
-            },
+            # {
+            #     "path": '/files',
+            #     "name": 'files',
+            #     "meta": {
+            #         "icon": 'ios-cloud',
+            #         "title": '文件管理'
+            #     },
+            #     "component": 'Main',
+            #     "children": [
+            #         {
+            #             'path': 'business-files-upload',
+            #             'name': 'business-files-upload',
+            #             'meta': {
+            #                 'access': ['assets.view_mysqllist'],
+            #                 'icon': 'ios-menu',
+            #                 'title': '文件上传'
+            #             },
+            #             'component': 'files/upload'
+            #         },{
+            #             'path': 'files-download',
+            #             'name': 'files-download',
+            #             'meta': {
+            #                 'access': ['assets.view_mysqllist'],
+            #                 'icon': 'ios-menu',
+            #                 'title': '文件下载'
+            #             },
+            #             'component': 'files/download'
+            #         }
+            #     ]
+            # },
 
             {
                 "path": '/user',

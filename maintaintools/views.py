@@ -82,9 +82,8 @@ class ApiUploadDownFileList(generics.ListCreateAPIView):
     search_fields = ('file_name',)
     ordering_fields = ('file_name',)
     permission_classes = (permissions.DjangoModelPermissions,)  # 继承 django的权限
-    print('12333333333333')
 
-
+# 计算文件大小的函数
 def CovertFileSize(size):
     kb = 1024
     mb = kb * 1024
@@ -107,6 +106,7 @@ class FileUploadViews(View):
 
     def post(self, request):
         try:
+            url = request.POST.get('url')  # 携带参数
             data = request.POST.get('data')  # 携带参数
             files = request.FILES.get('file')  # 文件
             file_size = CovertFileSize(files.size)
@@ -128,7 +128,7 @@ class FileUploadViews(View):
             print(file_path, '123\n123', upload_dir)
             for hostid in data.split(','):
                 queryset = LinuxList.objects.get(id=hostid)
-                print(' 得主机IP：%s：' % queryset.host)
+                print('获得主机IP：%s：' % queryset.host)
                 t = paramiko.Transport((queryset.host, queryset.sshport))
                 t.connect(username=queryset.user, password=queryset.password)
                 sftp = paramiko.SFTPClient.from_transport(t)
@@ -136,42 +136,30 @@ class FileUploadViews(View):
                 try:
                     # sftp.stat(upload_dir)#判断文件夹是否存在，不存在就创建
                     sftp.chdir('%s' % upload_path)  # 判断文件夹是否存在，不存在就创建
-                    print('主机 {0} 目录 {1} 存在，正在上传{2}文件！'.format(queryset.host, upload_path, files.name))
+                    print('主机 {0} 目录 {1} 存在，正在上传{2}文件！'.format(queryset.host, upload_dir, files.name))
                     sftp.put(file_path, upload_dir)
                     print('文件 {0} 上传成功！'.format(files.name))
-                    try:
-                        print('开始保存数据。。。。。。。。。。。。')
-                        upload_record = UploadDownFileInfo.objects.create(file_name=files.name, file_path=upload_dir,
-                                                                          file_size=file_size, file_host=queryset.host,
-                                                                          file_type=1)
-
-                        upload_record.save()
-                        print('保存数据：{0} 完成！！'.format(upload_record))
-                    except Exception as e:
-                        print('记录保存失败：%s' % e)
                     sftp.close()
                 except Exception as e:
                     print('主机 {0} 路径不存在：{1}'.format(queryset.host, e))
                     sftp.mkdir(upload_path)
                     print('创建目录 {0} 成功'.format(upload_path))
                     sftp.chdir('%s' % upload_path)
+                    print('主机 {0} 目录 {1} 存在，正在上传{2}文件！'.format(queryset.host, upload_dir, files.name))
                     sftp.put(file_path, upload_dir)
                     print('文件:{0} 上传成功!'.format(files.name))
-                    try:
-                        print('开始保存数据。。。。。。。。。。。。')
-                        upload_record = UploadDownFileInfo.objects.create(file_name=files.name, file_path=file_path,
-                                                                          file_size=file_size, file_host=queryset.host,
-                                                                          file_type=1)
-                        print('正在保存数据：{0}'.format(upload_record))
-
-                        upload_record.save()
-                    except Exception as e:
-                        print('记录保存失败：%s' % e)
                     sftp.close()
-
                 t.close()
+                try:
+                    print('开始保存数据。。。。。。。。。。。。')
+                    upload_record = UploadDownFileInfo.objects.create(file_name=files.name, file_path=upload_dir,
+                                                                      file_size=file_size, file_host=queryset.host,
+                                                                      file_type=1)
+                    print('正在保存数据：{0}'.format(upload_record))
+                    upload_record.save()
+                except Exception as e:
+                    print('记录保存失败：%s' % e)
                 # return HttpResponse('上传成功')
-
             return HttpResponse('999999999999999999999999999')
         except Exception as e:
             print('22222222222222222')

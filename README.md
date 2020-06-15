@@ -183,3 +183,9 @@ nohup python3 run.py&
 
 
 http://codingdict.com/sources/py/rest_framework.parsers/18886.html
+
+
+
+
+贵州46python启动
+nohup python3 manage.py runserver 0.0.0.0:8000&1
