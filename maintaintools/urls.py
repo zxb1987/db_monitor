@@ -12,5 +12,5 @@ urlpatterns = [
     path('api/uploaddownfile-list', views.ApiUploadDownFileList.as_view()),
     path('uploadfile', views.FileUploadViews.as_view()),
     path('uploadfile/file', test.FileUpload.as_view()),
-    path('uploadfile/Folder/<int:ssh_id>', test.FileUpload.as_view())
+    path('uploadfile/Folder/<int:ssh_id>', views.FileUploadViews.as_view())
 ]
