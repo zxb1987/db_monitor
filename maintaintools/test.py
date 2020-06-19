@@ -16,6 +16,7 @@ from assets.models import LinuxList
 from maintaintools.models import UploadDownFileInfo
 
 
+#  计算文件大小的函数
 def covertFileSizes(size):
     kb = 1024
     mb = kb * 1024
@@ -68,43 +69,77 @@ class FileUpload(View):
                 try:
                     # sftp.stat(upload_dir)#判断文件夹是否存在，不存在就创建
                     sftp.chdir('%s' % upload_path)  # 判断文件夹是否存在，不存在就创建
-                    print('主机 {0} 目录 {1} 存在，正在上传{2}文件！'.format(queryset.host, upload_path, files.name))
+                    print('主机 {0} 目录 {1} 存在，正在上传{2}文件！'.format(queryset.host, upload_dir, files.name))
                     sftp.put(file_path, upload_dir)
                     print('文件 {0} 上传成功！'.format(files.name))
-                    try:
-                        print('开始保存数据。。。。。。。。。。。。')
-                        upload_record = UploadDownFileInfo.objects.create(file_name=files.name, file_path=upload_dir,
-                                                                          file_size=file_size, file_host=queryset.host,
-                                                                          file_type=1)
-
-                        upload_record.save()
-                        print('保存数据：{0} 完成！！'.format(upload_record))
-                    except Exception as e:
-                        print('记录保存失败：%s' % e)
                     sftp.close()
                 except Exception as e:
                     print('主机 {0} 路径不存在：{1}'.format(queryset.host, e))
                     sftp.mkdir(upload_path)
                     print('创建目录 {0} 成功'.format(upload_path))
                     sftp.chdir('%s' % upload_path)
+                    print('主机 {0} 目录 {1} 存在，正在上传{2}文件！'.format(queryset.host, upload_dir, files.name))
                     sftp.put(file_path, upload_dir)
                     print('文件:{0} 上传成功!'.format(files.name))
-                    try:
-                        print('开始保存数据。。。。。。。。。。。。')
-                        upload_record = UploadDownFileInfo.objects.create(file_name=files.name, file_path=file_path,
-                                                                          file_size=file_size, file_host=queryset.host,
-                                                                          file_type=1)
-                        print('正在保存数据：{0}'.format(upload_record))
-
-                        upload_record.save()
-                    except Exception as e:
-                        print('记录保存失败：%s' % e)
                     sftp.close()
-
                 t.close()
+                try:
+                    print('开始保存数据。。。。。。。。。。。。')
+                    upload_record = UploadDownFileInfo.objects.create(file_name=files.name, file_path=upload_dir,
+                                                                      file_size=file_size, file_host=queryset.host,
+                                                                      file_type=1)
+                    print('正在保存数据：{0}'.format(upload_record))
+                    upload_record.save()
+                except Exception as e:
+                    print('记录保存失败：%s' % e)
                 # return HttpResponse('上传成功')
-
             return HttpResponse('999999999999999999999999999')
         except Exception as e:
             print('22222222222222222')
             return HttpResponse({"code": 400, "msg": u"上传失败%s" % e})
+
+    # class GetFolder(View):
+    def get(self, request,ssh_id):
+        queryset = LinuxList.objects.get(id=ssh_id)
+        val = request.body
+        print(ssh_id)
+        print(queryset)
+        reult_folder=''
+        # get_sshfolder='find / -path /proc -prune -o -type d -user root -print'
+        get_sshfolder = 'cd /home && ls -1'
+        # 实例化SSHClient
+        client = paramiko.SSHClient()
+        # 自动添加策略，保存服务器的主机名和密钥信息，如果不添加，那么不再本地know_hosts文件中记录的主机将无法连接
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        try:
+            # 连接SSH服务端，以用户名和密码进行认证
+            client.connect(hostname=queryset.host, port=queryset.sshport, username=queryset.user, password=queryset.password)
+            # 打开一个Channel并执行命令
+            # stdout 为正确输出，stderr为错误输出，同时是有1个变量有值，get_pty=True 从服务器请求一个伪终端(默认' ' False ' ')。见“.Channel.get_pty”
+            stdin, stdout, stderr = client.exec_command(get_sshfolder, get_pty=True)
+            # 打印执行结果
+            res, err = stdout.read().decode('utf-8'), stderr.read().decode('utf-8')  # 第二方案
+            fval=[]
+            reult_folder = res if res else err
+            fval.append(reult_folder)
+            # print('11111111')
+            # print(fval)
+            a=1
+            for fileall in fval:
+
+                print(fileall)
+                # if fileall.startswith('d'):
+                #     print('当前是文件夹')
+                # else:
+                #     print('当前是文件')
+
+            # 关闭SSHClient
+            client.close()
+        except Exception as e:
+            print('服务器 {0} 连接失败！请检查登录的用户名密码是否正确！！'.format(queryset.hostname))
+            print(e)
+        # dfs_showdir(reult_folder,0)
+        return HttpResponse(reult_folder)
+        # val = json.loads(request.body)
+    # print(val)
+
