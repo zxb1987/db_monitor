@@ -64,6 +64,7 @@ class PortCheck(models.Model):
     sshport = models.IntegerField("主机ssh端口号", default=22)
     check_type = models.IntegerField('检查类型 0端口 1进程', default=0)  # 0是端口 1进程
     # 0:Tomcat 1:ftp 2:oracle 3:mysql 4:nginx 5:php 6:java  7:docker
+
     check_server = models.IntegerField("检查服务 0:Tomcat 1:ftp 2:oracle 3:mysql 4:nginx 5:php 6:java  7:docker", default=0)
     createtime_ssh = models.DateTimeField("执行时间", default=timezone.now, blank=True, null=True)
     operate_type = models.IntegerField('操作类型  0停止{查杀}、1启动，2重载', default=0)  # 0停止{查杀}、1启动，2重载
