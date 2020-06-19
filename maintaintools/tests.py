@@ -53,6 +53,6 @@ def upload(local_dir, remote_dir):
 
 
 if __name__ == '__main__':
-    local_dir = r'F:\lecent\sdk\se\linux'
+    local_dir = r'C:\Users\Administrator\Pictures\Saved Pictures'
     remote_dir = '/home/lecentfile/'
     upload(local_dir, remote_dir)
